@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkWithDB.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Repository.Infrastructure;
 
 namespace WorkWithDB.Repository
 {
-    internal class BlogPostRepository :BaseRepository<int,BlogPost>, IBlogPostRepository 
+    internal class BlogPostRepository : BaseRepository<int,BlogPost>, IBlogPostRepository 
     {
 
         public BlogPostRepository(SqlConnection connection):base(connection)
@@ -49,6 +50,16 @@ namespace WorkWithDB.Repository
         {
             return base.ExecuteScalar<int>("select count(*) from BlogPost");
         }
+        public int GetCountByUserId(int userId)
+        {
+            return base.ExecuteScalar<int>(
+                "select count(*) from BlogPost where UserId = @userId",
+                new SqlParameters()
+                    {
+                        {"userId", userId}
+                    }
+                );
+        }
 
         public Entity.BlogPost GetById(int id)
         {
@@ -59,19 +70,8 @@ namespace WorkWithDB.Repository
                         {"Id",id}
                     }
                 );
-
         }
 
-        protected override BlogPost DefaultRowMapper(SqlDataReader reader)
-        {
-            return new BlogPost
-            {
-                Id = (int) reader["Id"],
-                UserId = (int) reader["UserId"], 
-                Content = (string) reader["Content"], 
-                Created = (DateTimeOffset) reader["Created"],
-            };
-        }
 
         public bool Delete(int id)
         {
@@ -85,9 +85,35 @@ namespace WorkWithDB.Repository
             return res == 1;
         }
 
-        public IList<Entity.BlogPost> FetchAll()
+        public IList<Entity.BlogPost> GetAll()
         {
             return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ");
+        }
+        
+        public IList<Entity.BlogPost> GetByUserId(int userId)
+        {
+
+            return base.ExecuteSelect(
+                "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ",
+                new SqlParameters()
+                    {
+                        {"userId", userId}
+                    }
+                );
+        }
+
+
+
+
+        protected override BlogPost DefaultRowMapping(SqlDataReader reader)
+        {
+            return new BlogPost
+            {
+                Id = (int)reader["Id"],
+                UserId = (int)reader["UserId"],
+                Content = (string)reader["Content"],
+                Created = (DateTimeOffset)reader["Created"],
+            };
         }
     }
 }

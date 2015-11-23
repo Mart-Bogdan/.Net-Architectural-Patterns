@@ -9,6 +9,5 @@ namespace WorkWithDB.Abstract
 {
     public interface IBlogUserRepository : IBaseRepository<int, BlogUser>
     {
-        List<BlogPost> GetUsersPost(int userId); 
     }
 }

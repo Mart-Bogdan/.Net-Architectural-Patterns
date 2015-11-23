@@ -7,8 +7,8 @@
     <ProjectGuid>{B1052A7E-B6CA-4521-A5A1-18044560B159}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkWithDB.Abstract</RootNamespace>
-    <AssemblyName>WorkWithDB.Abstract</AssemblyName>
+    <RootNamespace>WorkWithDB.DAL.Abstract</RootNamespace>
+    <AssemblyName>WorkWithDB.DAL.Abstract</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using WorkWithDB.Entity;
 
-namespace WorkWithDB.Repository
+namespace WorkWithDB.Repository.Infrastructure
 {
     internal abstract class BaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
@@ -37,7 +37,7 @@ namespace WorkWithDB.Repository
 
         protected T ExecuteSingleRowSelect<T>(
             string sql,
-            Func<SqlDataReader,T> rowMapper, 
+            Func<SqlDataReader,T> rowMapping, 
             IDictionary<string, object> parameters = null
             )
         {
@@ -49,7 +49,7 @@ namespace WorkWithDB.Repository
                 {
                     if (reader.NextResult())
                     {
-                        return rowMapper(reader);
+                        return rowMapping(reader);
                     }
                     else
                     {
@@ -62,7 +62,7 @@ namespace WorkWithDB.Repository
 
         protected IList<T> ExecuteSelect<T>(
             string sql,
-            Func<SqlDataReader, T> rowMapper,
+            Func<SqlDataReader, T> rowMapping,
             IDictionary<string, object> parameters = null
             )
         {
@@ -75,7 +75,7 @@ namespace WorkWithDB.Repository
                     List<T> list = new List<T>(1);
                     while (reader.NextResult())
                     {
-                        list.Add(rowMapper(reader));
+                        list.Add(rowMapping(reader));
                     }
 
                     return list;
@@ -86,12 +86,12 @@ namespace WorkWithDB.Repository
 
         protected TEntity ExecuteSingleRowSelect(string sql, SqlParameters sqlParameters = null)
         {
-            return ExecuteSingleRowSelect(sql, DefaultRowMapper, sqlParameters);
+            return ExecuteSingleRowSelect(sql, DefaultRowMapping, sqlParameters);
         }
 
         protected IList<TEntity> ExecuteSelect(string sql, SqlParameters sqlParameters = null)
         {
-            return ExecuteSelect(sql, DefaultRowMapper, sqlParameters);
+            return ExecuteSelect(sql, DefaultRowMapping, sqlParameters);
         }
 
         private static void FillParameters(IDictionary<string, object> parameters, SqlCommand command)
@@ -119,7 +119,7 @@ namespace WorkWithDB.Repository
 
         public abstract TKey Insert(TEntity entity);
         public abstract bool Update(TEntity entity);
-        protected abstract TEntity DefaultRowMapper(SqlDataReader reader);
+        protected abstract TEntity DefaultRowMapping(SqlDataReader reader);
 
     }
 }

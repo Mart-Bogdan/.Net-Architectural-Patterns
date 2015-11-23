@@ -15,7 +15,7 @@ namespace WorkWithDB.Repository
             throw new NotImplementedException();
         }
 
-        public void Update(Entity.BlogComment entity)
+        public bool Update(Entity.BlogComment entity)
         {
             throw new NotImplementedException();
         }
@@ -35,7 +35,7 @@ namespace WorkWithDB.Repository
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             throw new NotImplementedException();
         }

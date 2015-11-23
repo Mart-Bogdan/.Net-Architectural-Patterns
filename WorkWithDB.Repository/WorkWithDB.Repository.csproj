@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="SqlParameters.cs" />
+    <Compile Include="Infrastructure\BaseRepository.cs" />
+    <Compile Include="Infrastructure\SqlParameters.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="BlogCommentRepository.cs" />
     <Compile Include="BlogPostRepository.cs" />
@@ -49,9 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkWithDB.Abstract\WorkWithDB.Abstract.csproj">
+    <ProjectReference Include="..\WorkWithDB.Abstract\WorkWithDB.DAL.Abstract.csproj">
       <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
-      <Name>WorkWithDB.Abstract</Name>
+      <Name>WorkWithDB.DAL.Abstract</Name>
     </ProjectReference>
     <ProjectReference Include="..\WorkWithDB.Entity\WorkWithDB.Entity.csproj">
       <Project>{897f2f9c-7f5e-4d58-ab36-d2c9bd1e277a}</Project>

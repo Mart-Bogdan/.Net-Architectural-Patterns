@@ -6,98 +6,85 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkWithDB.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Repository.Infrastructure;
 
 namespace WorkWithDB.Repository
 {
-    public class BlogUserRepository : IBlogUserRepository
+    internal class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
-        SqlConnection _connection;
+        public BlogUserRepository(SqlConnection connection):base(connection){}
 
-        public BlogUserRepository(SqlConnection connection)
+        public override int Insert(Entity.BlogUser entity)
         {
-            _connection = connection;
+            return
+                base.ExecuteScalar<int>(
+                        "insert into BlogUser (UserPassword,Name,Nick) values (@UserPassword,@Name,@Nick)",
+                        new SqlParameters
+                        {
+                            {"UserPassword", entity.UserPassword},
+                            {"Name", entity.Name                },
+                            {"Nick", entity.Nick                },
+                        }
+                    );
         }
 
-        public List<Entity.BlogPost> GetUsersPost(int userId)
+        public override bool Update(Entity.BlogUser entity)
         {
-            List<Entity.BlogPost> result = new List<BlogPost>();
-            string queryString = "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp where bp.UserId = @userId";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            command.Parameters.AddWithValue("@userId", userId);
-            SqlDataReader reader = command.ExecuteReader();
-            BlogPost post = null;
-            while (reader.Read())
-            {
-                post = new BlogPost();
-                post.Id = (int)reader["Id"];
-                post.UserId = (int)reader["UserId"];
-                post.Content = (string)reader["Content"];
-                post.Created = (DateTimeOffset)reader["Created"];
-                result.Add(post);
-            }
-            
-            return result;
+            var res = base.ExecuteNonQuery(
+                    "UPDATE BlogUser set UserPassword = @UserPassword,   Name = @Name,  Nick = @Nick where Id = @Id ",
+                    new SqlParameters
+                    {
+                        {"UserPassword", entity.UserPassword},
+                        {"Name", entity.Name                },
+                        {"Nick", entity.Nick                },
+                        {"Id", entity.Id                    },
+                    }
+                );
+
+            return res > 0;
         }
 
-        public int Insert(Entity.BlogUser entity)
-        {
-            string queryString = "insert into BlogUser (UserPassword,Name,Nick) values (@UserPassword,@Name,@Nick)";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            command.Parameters.AddWithValue("@UserPassword", entity.UserPassword);
-            command.Parameters.AddWithValue("@Name", entity.Name);
-            command.Parameters.AddWithValue("@Nick", entity.Nick);
-            return (int)command.ExecuteScalar();
-        }
 
-        public void Update(Entity.BlogUser entity)
-        {
-            //
-            string queryString = "UPDATE BlogUser set UserPassword = @UserPassword,   Name = @Name,  Nick = @Nick where Id = @Id ";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            command.Parameters.AddWithValue("@UserPassword", entity.UserPassword);
-            command.Parameters.AddWithValue("@Name", entity.Name);
-            command.Parameters.AddWithValue("@Nick", entity.Nick);
-            command.Parameters.AddWithValue("@Id", entity.Id);
-            command.BeginExecuteNonQuery();
-        }
-
-        public int Upsert(BlogUser entity)
-        {
-            throw new NotImplementedException();
-        }
 
         public int GetCount()
         {
-            string queryString = "select count(*) from BlogUser";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            return count;
+            return base.ExecuteScalar<int>("select count(*) from BlogUser");
         }
 
         public Entity.BlogUser GetById(int id)
         {
-            string queryString = "select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu where bu.Id = @userId";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            command.Parameters.AddWithValue("@userId", id);
-            SqlDataReader reader = command.ExecuteReader();
-            BlogUser user = null;
-            while (reader.Read())
-            {
-                user = new BlogUser();
-                user.Id = (int)reader["Id"];
-                user.Name = (string)reader["Name"];
-                user.Nick = (string)reader["Nick"];
-                break;
-            }
-            return user;  
+            return base.ExecuteSingleRowSelect(
+                    "select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu where bu.Id = @userId",
+                    new SqlParameters()
+                    {
+                        {"userId",id}
+                    }
+                );
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            string queryString = "delete from BlogUser where Id = @id";
-            SqlCommand command = new SqlCommand(queryString, _connection);
-            command.Parameters.Add("@id",id);
-            command.ExecuteNonQuery();
+            var res = base.ExecuteNonQuery(
+                "delete from BlogUser where Id = @id",
+                new SqlParameters() { { "id", id } });
+
+            if (res > 1)
+                throw new InvalidOperationException("Multiple rows deleted by single delete query");
+
+            return res == 1;
+        }
+
+
+        protected override BlogUser DefaultRowMapping(SqlDataReader reader)
+        {
+            var user = new BlogUser
+            {
+                Id = (int)reader["Id"],
+                Name = (string)reader["Name"],
+                Nick = (string)reader["Nick"]
+            };
+
+            return user;
         }
     }
 }
