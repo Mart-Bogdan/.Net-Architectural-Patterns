@@ -83,7 +83,9 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             {
                 Id = (int)reader["Id"],
                 Name = (string)reader["Name"],
-                Nick = (string)reader["Nick"]
+                Nick = (string)reader["Nick"],
+                //Can't show passwords
+                //UserPassword = (string)reader["UserPassword"]
             };
 
             return user;
