@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkWithDB.Entity;
+﻿using WorkWithDB.Entity;
 
-namespace WorkWithDB.Abstract
+namespace WorkWithDB.DAL.Abstract
 {
     public interface IBaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {

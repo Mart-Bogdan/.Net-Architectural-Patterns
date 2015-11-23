@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkWithDB.Abstract;
+using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.SqlServer;
 using WorkWithDB.Entity;
-using WorkWithDB.Repository;
 
 namespace WorkWithDB.Test
 {

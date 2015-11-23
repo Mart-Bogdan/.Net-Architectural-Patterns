@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using WorkWithDB.Entity;
 
-namespace WorkWithDB.Repository.Infrastructure
+namespace WorkWithDB.DAL.SqlServer.Infrastructure
 {
     internal abstract class BaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WorkWithDB.Entity;
 
-namespace WorkWithDB.Abstract
+namespace WorkWithDB.DAL.Abstract
 {
     public interface IBlogPostRepository : IBaseRepository<int, BlogPost>
     {

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkWithDB.Abstract;
+using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
 
-namespace WorkWithDB.Repository
+namespace WorkWithDB.DAL.SqlServer.Repository
 {
     public class BlogCommentRepository : IBlogCommentRepository 
     {

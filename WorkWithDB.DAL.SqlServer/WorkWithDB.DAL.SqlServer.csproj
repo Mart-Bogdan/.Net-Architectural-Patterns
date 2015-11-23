@@ -43,9 +43,9 @@
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\SqlParameters.cs" />
     <Compile Include="UnitOfWork.cs" />
-    <Compile Include="BlogCommentRepository.cs" />
-    <Compile Include="BlogPostRepository.cs" />
-    <Compile Include="BlogUserRepository.cs" />
+    <Compile Include="Repository\BlogCommentRepository.cs" />
+    <Compile Include="Repository\BlogPostRepository.cs" />
+    <Compile Include="Repository\BlogUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

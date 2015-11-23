@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkWithDB.Abstract;
+using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.SqlServer.Infrastructure;
 using WorkWithDB.Entity;
-using WorkWithDB.Repository.Infrastructure;
 
-namespace WorkWithDB.Repository
+namespace WorkWithDB.DAL.SqlServer.Repository
 {
     internal class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
