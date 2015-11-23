@@ -9,6 +9,6 @@ namespace WorkWithDB.Abstract
 {
     public interface IBlogPostRepository : IBaseRepository<int, BlogPost>
     {
-        List<BlogPost> FetchAll(); 
+        IList<BlogPost> FetchAll(); 
     }
 }

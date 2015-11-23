@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="SqlParameters.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="BlogCommentRepository.cs" />
     <Compile Include="BlogPostRepository.cs" />

@@ -20,7 +20,7 @@ namespace WorkWithDB.Repository
             throw new NotImplementedException();
         }
 
-        public void Upsert(BlogComment entity)
+        public int Upsert(BlogComment entity)
         {
             throw new NotImplementedException();
         }

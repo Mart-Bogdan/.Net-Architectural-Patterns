@@ -61,7 +61,7 @@ namespace WorkWithDB.Repository
             command.BeginExecuteNonQuery();
         }
 
-        public void Upsert(BlogUser entity)
+        public int Upsert(BlogUser entity)
         {
             throw new NotImplementedException();
         }
