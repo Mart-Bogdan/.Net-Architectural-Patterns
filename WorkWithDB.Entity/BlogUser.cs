@@ -11,5 +11,10 @@ namespace WorkWithDB.Entity
        public string Nick {get;set;}
        public string UserPassword {get;set;}
        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("BlogUser(Id: {3},Name: {0}, Nick: {1}, UserPassword: {2})", Name, Nick, UserPassword,Id);
+        }
     }
 }

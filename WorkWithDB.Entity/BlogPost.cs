@@ -11,5 +11,10 @@ namespace WorkWithDB.Entity
         public int UserId {get;set;} 
         public string Content {get;set;}
         public DateTimeOffset Created { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("BlogPost(Id: {3}, Created: {1}, UserId: {2})", null, Created, UserId, Id);
+        }
     }
 }
