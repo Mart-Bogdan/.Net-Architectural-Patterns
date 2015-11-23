@@ -1,4 +1,5 @@
-﻿using WorkWithDB.Entity;
+﻿using System.Collections.Generic;
+using WorkWithDB.Entity;
 
 namespace WorkWithDB.DAL.Abstract
 {
@@ -12,5 +13,7 @@ namespace WorkWithDB.DAL.Abstract
 
         TEntity GetById(TKey id);
         bool Delete(TKey id);
+
+        IList<TEntity> GetAll();
     }
 }

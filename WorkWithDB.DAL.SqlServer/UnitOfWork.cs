@@ -21,7 +21,7 @@ namespace WorkWithDB.DAL.SqlServer
             var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
             _connection = new SqlConnection(connectionString);
             _connection.Open();
-            _transaction = _connection.BeginTransaction(IsolationLevel.ReadCommitted);
+            _transaction = _connection.BeginTransaction(/*IsolationLevel.ReadCommitted*/);
         }
 
         public IBlogPostRepository BlogPostRepository
@@ -48,7 +48,7 @@ namespace WorkWithDB.DAL.SqlServer
         {
             try
             {
-                _transaction.Dispose();
+                if (_transaction != null) _transaction.Dispose();
             }
             finally
             {
@@ -59,12 +59,12 @@ namespace WorkWithDB.DAL.SqlServer
 
         public void Commit()
         {
-            _transaction.Commit();
+            if (_transaction != null) _transaction.Commit();
         }
 
         public void RollBack()
         {
-            _transaction.Rollback();
+            if (_transaction != null) _transaction.Rollback();
         }
     }
 }

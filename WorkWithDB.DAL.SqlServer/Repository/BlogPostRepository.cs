@@ -82,7 +82,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             return res == 1;
         }
 
-        public IList<Entity.BlogPost> GetAll()
+        public IList<BlogPost> GetAll()
         {
             return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ");
         }

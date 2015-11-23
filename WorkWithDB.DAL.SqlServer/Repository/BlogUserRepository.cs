@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.SqlServer.Infrastructure;
@@ -68,6 +69,11 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                 throw new InvalidOperationException("Multiple rows deleted by single delete query");
 
             return res == 1;
+        }
+
+        public IList<BlogUser> GetAll()
+        {
+            return base.ExecuteSelect("select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu ");
         }
 
 

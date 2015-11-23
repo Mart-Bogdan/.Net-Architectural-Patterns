@@ -15,3 +15,9 @@ create table BlogPost
 	Created datetimeoffset(7) not null,
 	UserId int not null references BlogUser(Id)  
 );
+
+
+CREATE UNIQUE INDEX UK_BlogUser_Nick
+ON SampleBlog.dbo.BlogUser (Nick)
+ON [PRIMARY]
+GO

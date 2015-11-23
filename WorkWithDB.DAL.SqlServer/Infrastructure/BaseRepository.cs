@@ -49,7 +49,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.NextResult())
+                    if (reader.Read())
                     {
                         return rowMapping(reader);
                     }
@@ -75,7 +75,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
                 using (var reader = command.ExecuteReader())
                 {
                     List<T> list = new List<T>(1);
-                    while (reader.NextResult())
+                    while (reader.Read())
                     {
                         list.Add(rowMapping(reader));
                     }
