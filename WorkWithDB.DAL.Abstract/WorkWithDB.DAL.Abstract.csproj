@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseRepository.cs" />
-    <Compile Include="IBlogCommentRepository.cs" />
     <Compile Include="IBlogPostRepository.cs" />
     <Compile Include="IBlogUserRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />

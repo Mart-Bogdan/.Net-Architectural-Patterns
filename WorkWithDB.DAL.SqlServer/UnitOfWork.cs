@@ -13,29 +13,15 @@ namespace WorkWithDB.DAL.SqlServer
 
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
-        private IBlogCommentRepository _blogCommentRepository;
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rollBack">if value = true at dispose transaction will rollback else commited </param>
         public UnitOfWork ()
 	    {
             _connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
             _transaction = _connection.BeginTransaction();
-        }
-        
-        
-
-        public IBlogCommentRepository BlogCommentRepository
-        {
-            get
-            {
-                if (_blogCommentRepository == null)
-                    _blogCommentRepository = new BlogCommentRepository();
-                return _blogCommentRepository;
-            }
         }
 
         public IBlogPostRepository BlogPostRepository
