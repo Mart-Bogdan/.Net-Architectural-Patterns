@@ -39,14 +39,14 @@ namespace WorkWithDB.Repository
             return result;
         }
 
-        public void Insert(Entity.BlogUser entity)
+        public int Insert(Entity.BlogUser entity)
         {
             string queryString = "insert into BlogUser (UserPassword,Name,Nick) values (@UserPassword,@Name,@Nick)";
             SqlCommand command = new SqlCommand(queryString, _connection);
             command.Parameters.AddWithValue("@UserPassword", entity.UserPassword);
             command.Parameters.AddWithValue("@Name", entity.Name);
             command.Parameters.AddWithValue("@Nick", entity.Nick);
-            command.BeginExecuteNonQuery();
+            return (int)command.ExecuteScalar();
         }
 
         public void Update(Entity.BlogUser entity)
@@ -59,6 +59,11 @@ namespace WorkWithDB.Repository
             command.Parameters.AddWithValue("@Nick", entity.Nick);
             command.Parameters.AddWithValue("@Id", entity.Id);
             command.BeginExecuteNonQuery();
+        }
+
+        public void Upsert(BlogUser entity)
+        {
+            throw new NotImplementedException();
         }
 
         public int GetCount()

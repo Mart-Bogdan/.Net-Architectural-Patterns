@@ -17,14 +17,14 @@ namespace WorkWithDB.Repository
         {
             _connection = connection;
         }
-        public void Insert(Entity.BlogPost entity)
+        public int Insert(Entity.BlogPost entity)
         {
-            string queryString = "insert into BlogPost (Content,Created,UserId) values (@Content,\'@Created\',@UserId)";
+            string queryString = "insert into BlogPost (Content,Created,UserId) values (@Content,@Created,@UserId)";
             SqlCommand command = new SqlCommand(queryString, _connection);
             command.Parameters.AddWithValue("@Content", entity.Content);
             command.Parameters.AddWithValue("@Created", entity.Created.ToString("{yyyy-mm-dd}"));
             command.Parameters.AddWithValue("@UserId", entity.UserId);
-            command.BeginExecuteNonQuery();
+            return (int)command.ExecuteScalar();
         }
 
         public void Update(Entity.BlogPost entity)
@@ -34,7 +34,12 @@ namespace WorkWithDB.Repository
             command.Parameters.AddWithValue("@Content", entity.Content);
             command.Parameters.AddWithValue("@UserId", entity.UserId);
             command.Parameters.AddWithValue("@Id", entity.Id);
-            command.BeginExecuteNonQuery();
+            command.ExecuteNonQuery();
+        }
+
+        public void Upsert(BlogPost entity)
+        {
+            throw new NotImplementedException();
         }
 
         public int GetCount()
@@ -73,25 +78,24 @@ namespace WorkWithDB.Repository
             command.ExecuteNonQuery();
         }
 
-        public List<Entity.BlogPost> Fetch()
+        public List<Entity.BlogPost> FetchAll()
         {
-
-            List<Entity.BlogPost> result = new List<BlogPost>();
             string queryString = "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ";
             SqlCommand command = new SqlCommand(queryString, _connection);
-            SqlDataReader reader = command.ExecuteReader();
-            BlogPost post = null;
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                post = new BlogPost();
-                post.Id = (int)reader["Id"];
-                post.UserId = (int)reader["UserId"];
-                post.Content = (string)reader["Content"];
-                post.Created = (DateTimeOffset)reader["Created"];
-                result.Add(post);
+                List<Entity.BlogPost> result = new List<BlogPost>();
+                while (reader.Read())
+                {
+                    var post = new BlogPost();
+                    post.Id = (int)reader["Id"];
+                    post.UserId = (int)reader["UserId"];
+                    post.Content = (string)reader["Content"];
+                    post.Created = (DateTimeOffset)reader["Created"];
+                    result.Add(post);
+                }
+                return result;
             }
-
-            return result;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace WorkWithDB.Repository
         private string _connectionString;
         private SqlTransaction _transaction ;
         private SqlConnection _connection;
-        private bool _disposableMethod;
+
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
         private IBlogCommentRepository _blogCommentRepository;
@@ -22,10 +22,9 @@ namespace WorkWithDB.Repository
         /// 
         /// </summary>
         /// <param name="rollBack">if value = true at dispose transaction will rollback else commited </param>
-        public UnitOfWork (bool rollBack = false)
+        public UnitOfWork ()
 	    {
             _connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-            _disposableMethod = rollBack;
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
             _transaction = _connection.BeginTransaction();
@@ -65,15 +64,14 @@ namespace WorkWithDB.Repository
 
         public void Dispose()
         {
-            if (!_disposableMethod)
+            try
             {
-                _transaction.Commit();
+                _transaction.Dispose();
             }
-            else
+            finally
             {
-                _transaction.Rollback();
+                _connection.Dispose();                
             }
-            _connection.Close();
         }
 
 

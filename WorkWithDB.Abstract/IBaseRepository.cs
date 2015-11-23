@@ -9,8 +9,9 @@ namespace WorkWithDB.Abstract
 {
     public interface IBaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
-        void Insert(TEntity entity);
+        TKey Insert(TEntity entity);
         void Update(TEntity entity);
+        void Upsert(TEntity entity);
 
         int GetCount();
 
