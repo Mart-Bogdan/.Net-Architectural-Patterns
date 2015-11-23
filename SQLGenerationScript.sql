@@ -13,6 +13,6 @@ create table BlogPost
 (
 	Id int not null identity primary key,
 	Content text not null,
-	Created datetime not null,
+	Created datetimeoffset(7) not null,
 	UserId int not null references BlogUser(Id)  
 );

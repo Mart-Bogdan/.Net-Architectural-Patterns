@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.Entity", "WorkWithDB.Entity\WorkWithDB.Entity.csproj", "{897F2F9C-7F5E-4D58-AB36-D2C9BD1E277A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.DAL.Abstract", "WorkWithDB.Abstract\WorkWithDB.DAL.Abstract.csproj", "{B1052A7E-B6CA-4521-A5A1-18044560B159}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.DAL.Abstract", "WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj", "{B1052A7E-B6CA-4521-A5A1-18044560B159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.Repository", "WorkWithDB.Repository\WorkWithDB.Repository.csproj", "{28C9AA9C-5DB8-478D-A137-47D8E281123E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.DAL.SqlServer", "WorkWithDB.DAL.SqlServer\WorkWithDB.DAL.SqlServer.csproj", "{28C9AA9C-5DB8-478D-A137-47D8E281123E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.Test", "WorkWithDB.Test\WorkWithDB.Test.csproj", "{AAB5E041-2CF9-477B-978E-36ACA13EF5C6}"
 EndProject
