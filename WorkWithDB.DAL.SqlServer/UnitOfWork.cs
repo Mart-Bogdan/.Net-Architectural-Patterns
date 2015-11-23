@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.SqlServer.Repository;
@@ -7,9 +8,8 @@ namespace WorkWithDB.DAL.SqlServer
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private string _connectionString;
-        private SqlTransaction _transaction ;
-        private SqlConnection _connection;
+        private readonly SqlTransaction _transaction;
+        private readonly SqlConnection _connection;
 
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
@@ -18,10 +18,10 @@ namespace WorkWithDB.DAL.SqlServer
         /// </summary>
         public UnitOfWork ()
 	    {
-            _connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-            _connection = new SqlConnection(_connectionString);
+            var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            _connection = new SqlConnection(connectionString);
             _connection.Open();
-            _transaction = _connection.BeginTransaction();
+            _transaction = _connection.BeginTransaction(IsolationLevel.ReadCommitted);
         }
 
         public IBlogPostRepository BlogPostRepository
@@ -29,7 +29,7 @@ namespace WorkWithDB.DAL.SqlServer
             get
             {
                 if (_blogPostRepository == null)
-                    _blogPostRepository = new BlogPostRepository(_connection);
+                    _blogPostRepository = new BlogPostRepository(_connection, _transaction);
                 return _blogPostRepository;
             }
         }
@@ -39,7 +39,7 @@ namespace WorkWithDB.DAL.SqlServer
             get
             {
                 if (_blogUserRepository == null)
-                    _blogUserRepository = new BlogUserRepository(_connection);
+                    _blogUserRepository = new BlogUserRepository(_connection, _transaction);
                 return _blogUserRepository;
             }
         }

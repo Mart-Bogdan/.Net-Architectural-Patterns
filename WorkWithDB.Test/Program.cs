@@ -15,7 +15,7 @@ namespace WorkWithDB.Test
         {
             using (IUnitOfWork scope = new UnitOfWork())
             {
-                scope.BlogUserRepository.Insert(new BlogUser() { Name = "Evgeniy", Nick = "student_3121", UserPassword = "!QAZ2wsx#EDC4rfv" });
+                var id = scope.BlogUserRepository.Insert(new BlogUser() { Name = "Evgeniy", Nick = "student_3121", UserPassword = "!QAZ2wsx#EDC4rfv" });
                 
                 scope.Commit();
             }

@@ -8,19 +8,19 @@ namespace WorkWithDB.DAL.SqlServer.Repository
 {
     internal class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
-        public BlogUserRepository(SqlConnection connection):base(connection){}
+        public BlogUserRepository(SqlConnection connection, SqlTransaction transaction) : base(connection, transaction) { }
 
         public override int Insert(Entity.BlogUser entity)
         {
-            return
-                base.ExecuteScalar<int>(
-                        "insert into BlogUser (UserPassword,Name,Nick) values (@UserPassword,@Name,@Nick)",
-                        new SqlParameters
-                        {
-                            {"UserPassword", entity.UserPassword},
-                            {"Name", entity.Name                },
-                            {"Nick", entity.Nick                },
-                        }
+            return (int)
+                base.ExecuteScalar<decimal>(
+                    "insert into BlogUser (UserPassword,Name,Nick) values (@UserPassword,@Name,@Nick) SELECT SCOPE_IDENTITY()",
+                    new SqlParameters
+                    {
+                        {"UserPassword", entity.UserPassword},
+                        {"Name", entity.Name                },
+                        {"Nick", entity.Nick                },
+                    }
                     );
         }
 

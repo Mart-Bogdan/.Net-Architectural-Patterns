@@ -1,5 +1,4 @@
-create database SampleDB
-use SampleDB
+
 create table BlogUser 
 (
 	Id int not null identity primary key,

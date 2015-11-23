@@ -7,17 +7,19 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 {
     internal abstract class BaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
-        protected readonly SqlConnection _connection;
+        private readonly SqlConnection _connection;
+        private readonly SqlTransaction _transaction;
 
-        protected BaseRepository(SqlConnection connection)
+        protected BaseRepository(SqlConnection connection, SqlTransaction transaction)
         {
             _connection = connection;
+            _transaction = transaction;
         }
 
 
         protected T ExecuteScalar<T>(string sql, IDictionary<string, object> parameters = null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
             {
                 FillParameters(parameters, command);
 
@@ -27,7 +29,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 
         protected int ExecuteNonQuery(string sql, IDictionary<string, object> parameters=null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
             {
                 FillParameters(parameters, command);
 
@@ -41,7 +43,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
             {
                 FillParameters(parameters, command);
 
@@ -66,7 +68,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
             {
                 FillParameters(parameters, command);
 

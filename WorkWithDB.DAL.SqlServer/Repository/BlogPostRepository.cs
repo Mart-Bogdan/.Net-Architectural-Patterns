@@ -10,14 +10,14 @@ namespace WorkWithDB.DAL.SqlServer.Repository
     internal class BlogPostRepository : BaseRepository<int,BlogPost>, IBlogPostRepository 
     {
 
-        public BlogPostRepository(SqlConnection connection):base(connection)
+        public BlogPostRepository(SqlConnection connection, SqlTransaction transaction):base(connection,transaction)
         {}
 
         public override int Insert(Entity.BlogPost entity)
         {
-            return
-                base.ExecuteScalar<int>(
-                        "insert into BlogPost (Content,Created,UserId) values (@Content,@Created,@UserId)",
+            return (int)
+                base.ExecuteScalar<decimal>(
+                        "insert into BlogPost (Content,Created,UserId) values (@Content,@Created,@UserId) SELECT SCOPE_IDENTITY()",
                         new SqlParameters
                         {
                             {"Content", entity.Content},
@@ -89,7 +89,6 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         
         public IList<Entity.BlogPost> GetByUserId(int userId)
         {
-
             return base.ExecuteSelect(
                 "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ",
                 new SqlParameters()
