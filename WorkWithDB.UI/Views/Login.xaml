@@ -1,8 +1,27 @@
 ﻿<Window x:Class="WorkWithDB.UI.Views.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:WorkWithDB.UI.ViewModels"
         Title="Login" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+    <Window.DataContext>
+        <viewModels:LoginVM />
+    </Window.DataContext>
+    <StackPanel>
+        <Label>Login:</Label>
+        <TextBox Text="{Binding Login}"></TextBox>
+        <Label>Password:</Label>
+        <PasswordBox Name="MyPasswordBox"></PasswordBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="0,0,16,0"
+                    Command="{Binding OkCommand,Mode=OneTime}">
+                Ok
+            </Button>
+            <Button Margin="0,0,16,0">
+                Cancel
+            </Button>
+            <Button>
+                Register
+            </Button>
+        </StackPanel>
+    </StackPanel>
 </Window>

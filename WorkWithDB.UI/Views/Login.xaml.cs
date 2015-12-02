@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WorkWithDB.UI.ViewModels;
 
 namespace WorkWithDB.UI.Views
 {
@@ -22,6 +23,8 @@ namespace WorkWithDB.UI.Views
         public Login()
         {
             InitializeComponent();
+
+            ((LoginVM) DataContext).Password = MyPasswordBox;
         }
     }
 }
