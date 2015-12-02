@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace WorkWithDB.UI.View.ViewModel
+namespace WorkWithDB.UI
 {
     public class RelayCommand : ICommand
     {

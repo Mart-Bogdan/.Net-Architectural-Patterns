@@ -56,7 +56,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Debug\BindingTestConverter.cs" />
+    <Compile Include="Debug\GuiDebug.cs" />
+    <Compile Include="Debug\TriggerTracing.cs" />
+    <Compile Include="Extensions\Field.cs" />
+    <Compile Include="Extensions\New.cs" />
+    <Compile Include="Extensions\This.cs" />
+    <Compile Include="Extensions\TrickyBinding.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,6 +79,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -109,6 +123,9 @@
       <Project>{897f2f9c-7f5e-4d58-ab36-d2c9bd1e277a}</Project>
       <Name>WorkWithDB.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
