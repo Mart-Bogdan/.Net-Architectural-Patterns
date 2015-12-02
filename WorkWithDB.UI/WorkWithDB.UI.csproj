@@ -68,6 +68,7 @@
     <Compile Include="Extensions\TrickyBinding.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="StateHolder.cs" />
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>

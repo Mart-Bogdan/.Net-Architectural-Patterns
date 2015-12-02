@@ -76,6 +76,18 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             return base.ExecuteSelect("select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu ");
         }
 
+        public BlogUser GetByLoginPassword(string login, string password)
+        {
+            return base.ExecuteSingleRowSelect(
+                    "select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu where bu.Nick = @login AND bu.UserPassword = @password",
+                    new SqlParameters()
+                    {
+                        {"login",login},
+                        {"password",password},
+                    }
+                );
+        }
+
 
         protected override BlogUser DefaultRowMapping(SqlDataReader reader)
         {
