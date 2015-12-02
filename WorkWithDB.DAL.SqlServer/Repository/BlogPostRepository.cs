@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.SqlServer.Infrastructure;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.SqlServer.Repository
 {
@@ -86,11 +87,28 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         {
             return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ");
         }
+
+        public IList<BlogPostWithAuthor> GetAllWithUserNick()
+        {
+            return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created, u.Nick " +
+                                      "     from BlogPost bp " +
+                                      "     JOIN BlogUser u on bp.UserId = u.Id",
+                                      reader => new BlogPostWithAuthor
+                                        {
+                                            Id = (int)reader["Id"],
+                                            UserId = (int)reader["UserId"],
+                                            Content = (string)reader["Content"],
+                                            Created = (DateTimeOffset)reader["Created"],
+                                            AuthorNick = (string)reader["Nick"],
+                                        }
+                                    );
+            
+        } 
         
         public IList<Entity.BlogPost> GetByUserId(int userId)
         {
             return base.ExecuteSelect(
-                "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ",
+                "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp where bp.UserId = @userId",
                 new SqlParameters()
                     {
                         {"userId", userId}

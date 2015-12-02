@@ -39,10 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseEntity.cs" />
-    <Compile Include="BlogPost.cs" />
-    <Compile Include="BlogUser.cs" />
+    <Compile Include="Entities\Abstract\BaseEntity.cs" />
+    <Compile Include="Entities\BlogPost.cs" />
+    <Compile Include="Entities\BlogUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\BlogPostWithAuthor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

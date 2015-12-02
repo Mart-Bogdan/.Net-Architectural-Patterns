@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.Abstract
 {
@@ -7,5 +8,6 @@ namespace WorkWithDB.DAL.Abstract
     {
         IList<BlogPost> GetByUserId(int userId);
         int GetCountByUserId(int userId);
+        IList<BlogPostWithAuthor> GetAllWithUserNick();
     }
 }
