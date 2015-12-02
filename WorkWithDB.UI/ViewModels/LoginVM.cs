@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.UI.Views;
 
 namespace WorkWithDB.UI.ViewModels
 {
@@ -19,12 +21,12 @@ namespace WorkWithDB.UI.ViewModels
             set;
         }
 
-        public RelayCommand OkCommand
+        public ICommand OkCommand
         {
             get
             {
-                return new RelayCommand(
-                    (_) =>
+                return RelayCommand.CreateVoid(
+                    () =>
                     {
                         var login = Login;
                         var password = Password.Password;
@@ -41,10 +43,15 @@ namespace WorkWithDB.UI.ViewModels
 
                             StateHolder.CurrentUser = user;
 
+                            MainWindow main = new MainWindow();
+                            App.Current.MainWindow.Close();
+                            App.Current.MainWindow = main;
+                            main.Show();
                         }
                     },
-                    (_)=>Login!=null && Login.Length>0 && Password!=null && Password.Password.Length>0
-                );
+                    ()=>
+                        !string.IsNullOrEmpty(Login) && Password!=null && Password.Password.Length>0
+                    );
             }
         }
 
