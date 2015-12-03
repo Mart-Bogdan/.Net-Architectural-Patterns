@@ -101,7 +101,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             if (parameters != null)
                 foreach (var parameter in parameters)
                 {
-                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                    command.Parameters.AddWithValue(parameter.Key, parameter.Value ?? DBNull.Value);
                 }
         }
 
