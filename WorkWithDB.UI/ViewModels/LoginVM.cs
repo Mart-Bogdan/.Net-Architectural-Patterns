@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
@@ -15,11 +15,7 @@ namespace WorkWithDB.UI.ViewModels
         public String Login { get; set; }
 
 
-        public PasswordBox Password
-        {
-            get;
-            set;
-        }
+        public String Password {get;set;}
 
         public ICommand OkCommand
         {
@@ -29,7 +25,7 @@ namespace WorkWithDB.UI.ViewModels
                     () =>
                     {
                         var login = Login;
-                        var password = Password.Password;
+                        var password = Password.ToString();
 
                         using (var uow = UnitOfWorkFactory.CreateInstance())
                         {
@@ -44,17 +40,37 @@ namespace WorkWithDB.UI.ViewModels
                             StateHolder.CurrentUser = user;
 
                             MainWindow main = new MainWindow();
-                            App.Current.MainWindow.Close();
-                            App.Current.MainWindow = main;
+                            Application.Current.MainWindow.Close();
+                            Application.Current.MainWindow = main;
                             main.Show();
                         }
                     },
                     ()=>
-                        !string.IsNullOrEmpty(Login) && Password!=null && Password.Password.Length>0
+                        !string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password)
                     );
             }
         }
 
+
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return RelayCommand.CreateVoid(Application.Current.Shutdown);
+            }
+        }
+
+
+        public ICommand RegisterCommand
+        {
+            get
+            {
+                return RelayCommand.CreateVoid(() =>
+                {
+                    
+                });
+            }
+        }
 
 
     }

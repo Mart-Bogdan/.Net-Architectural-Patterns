@@ -1,0 +1,12 @@
+﻿<Window x:Class="WorkWithDB.UI.Views.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:WorkWithDB.UI.ViewModels"
+        Title="Register" Height="300" Width="300">
+    <Window.DataContext>
+        <viewModels:RegisterVM/>
+    </Window.DataContext>
+    <Grid>
+        
+    </Grid>
+</Window>
