@@ -6,12 +6,21 @@ namespace WorkWithDB.UI.MVVM
 {
     public static class MVVMExt
     {
-        public static String GetPassword(DependencyObject obj)
+        /// <summary>
+        /// Gets "MVVMExt.Password" attached property. Please be carefull to use in production, it's insecure.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static String GetPassword(PasswordBox obj)
         {
             return (String)obj.GetValue(PasswordProperty);
         }
-
-        public static void SetPassword(DependencyObject obj, String value)
+        /// <summary>
+        /// Sets "MVVMExt.Password" attached property. Please be carefull to use in production, it's insecure.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="value"></param>
+        public static void SetPassword(PasswordBox obj, String value)
         {
             obj.SetValue(PasswordProperty, value);
         }
