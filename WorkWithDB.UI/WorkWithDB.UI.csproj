@@ -72,7 +72,8 @@
     <Compile Include="Extensions\New.cs" />
     <Compile Include="Extensions\This.cs" />
     <Compile Include="Extensions\TrickyBinding.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="MVVM\MVVMExt.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="StateHolder.cs" />
     <Compile Include="Behaviors\PasswordBehavior.cs" />

@@ -5,6 +5,7 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.UI.MVVM;
 using WorkWithDB.UI.Views;
 
 namespace WorkWithDB.UI.ViewModels
@@ -20,29 +21,27 @@ namespace WorkWithDB.UI.ViewModels
                 return RelayCommand.Create<Window>(
                     w =>
                     {
-                        //var login = Login;
-                        //var password = Password.Password;
+                        using (var uow = UnitOfWorkFactory.CreateInstance())
+                        {
+                            var userRepository = uow.BlogUserRepository;
 
-                        //using (var uow = UnitOfWorkFactory.CreateInstance())
-                        //{
-                        //    var userRepository = uow.BlogUserRepository;
-                        //    var user = userRepository.GetByLoginPassword(login, password);
-                        //    if (user == null)
-                        //    {
-                        //        MessageBox.Show("Incorrect credentials");
-                        //        return;
-                        //    }
+                            var userId = userRepository.Insert(this);
+                            uow.Commit();
 
-                        //    StateHolder.CurrentUser = user;
+                            StateHolder.CurrentUser = userRepository.GetById(userId);
 
-                        //    MainWindow main = new MainWindow();
-                        //    Application.Current.MainWindow.Close();
-                        //    Application.Current.MainWindow = main;
-                        //    main.Show();
-                        //}
+                            w.Close();
+
+                            MainWindow main = new MainWindow();
+                            Application.Current.MainWindow.Close();
+                            Application.Current.MainWindow = main;
+                            main.Show();
+                        }
                     },
                     w =>
-                        !string.IsNullOrEmpty(UserPassword) && UserPassword != PasswordConfirmation
+                        !string.IsNullOrEmpty(Nick) &&
+                        !string.IsNullOrEmpty(UserPassword) && 
+                        UserPassword == PasswordConfirmation
                     );
             }
         }
@@ -52,7 +51,7 @@ namespace WorkWithDB.UI.ViewModels
         {
             get
             {
-                return RelayCommand.CreateVoid(Application.Current.Shutdown);
+                return RelayCommand.Create<Window>(w=>w.Close());
             }
         }
 
@@ -71,6 +70,10 @@ namespace WorkWithDB.UI.ViewModels
                             return "Passwords do not match";
 
                         break;
+                    case "Nick":
+                        return String.IsNullOrWhiteSpace(Nick) ? "Login must not be empty" : null;
+                    case "Name":
+                        return String.IsNullOrWhiteSpace(Name) ? "Name must be specifyed" : null;
                 }
 
                 return null;

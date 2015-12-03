@@ -1,8 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using WorkWithDB.UI.Debug;
 
-namespace WorkWithDB.UI
+namespace WorkWithDB.UI.MVVM
 {
     public static class RelayCommand
     {
@@ -59,6 +60,9 @@ namespace WorkWithDB.UI
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
+            if (GuiDebug.InDesignerMode)
+                return true;
+
             return canExecute == null ? true : canExecute((T) parameter);
         }
 
@@ -70,6 +74,9 @@ namespace WorkWithDB.UI
 
         public void Execute(object parameter)
         {
+            if (GuiDebug.InDesignerMode)
+                return;
+
             execute((T) parameter);
         }
 

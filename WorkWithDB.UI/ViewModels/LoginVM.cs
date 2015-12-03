@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.UI.MVVM;
 using WorkWithDB.UI.Views;
 
 namespace WorkWithDB.UI.ViewModels
@@ -67,7 +68,7 @@ namespace WorkWithDB.UI.ViewModels
             {
                 return RelayCommand.CreateVoid(() =>
                 {
-                    
+                    new Register().ShowDialog();
                 });
             }
         }

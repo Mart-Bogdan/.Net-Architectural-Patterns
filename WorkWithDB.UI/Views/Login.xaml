@@ -4,7 +4,9 @@
         xmlns:viewModels="clr-namespace:WorkWithDB.UI.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:WorkWithDB.UI.Behaviors"
-        Title="Login" Height="300" Width="300">
+        xmlns:ui="clr-namespace:WorkWithDB.UI"
+        xmlns:mvvm="clr-namespace:WorkWithDB.UI.MVVM"
+        Title="Blog - Login" Height="162" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewModels:LoginVM />
     </Window.DataContext>
@@ -12,21 +14,18 @@
         <Label>Login:</Label>
         <TextBox Text="{Binding Login}"></TextBox>
         <Label>Password:</Label>
-        <PasswordBox >
-
-            <i:Interaction.Behaviors>
-                <behaviors:PasswordBehavior Password="{Binding Password, Mode=OneWayToSource}" />
-            </i:Interaction.Behaviors>
-        </PasswordBox>
+        <PasswordBox mvvm:MVVMExt.Password="{Binding Password, Mode=TwoWay}"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="25">
-            <Button Margin="0,0,16,0" 
-                    Command="{Binding OkCommand,Mode=OneTime}" Padding="10,0">
+            <Button Margin="0,0,16,0" Padding="10,0"
+                    Command="{Binding OkCommand,Mode=OneTime}">
                 Ok 
             </Button>
-            <Button Margin="0,0,16,0" Padding="10,0">
+            <Button Margin="0,0,16,0" Padding="10,0"
+                    Command="{Binding CancelCommand,Mode=OneTime}">
                 Cancel
             </Button>
-            <Button Padding="10,0">
+            <Button Padding="10,0"
+                    Command="{Binding RegisterCommand,Mode=OneTime}">
                 Register
             </Button>
         </StackPanel>
