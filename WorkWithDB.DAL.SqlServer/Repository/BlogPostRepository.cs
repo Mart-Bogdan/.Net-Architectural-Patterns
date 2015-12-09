@@ -18,12 +18,13 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         {
             return (int)
                 base.ExecuteScalar<decimal>(
-                        "insert into BlogPost (Content,Created,UserId) values (@Content,@Created,@UserId) SELECT SCOPE_IDENTITY()",
+                        "insert into BlogPost (Content,Created,UserId,Title) values (@Content,@Created,@UserId,@Title) SELECT SCOPE_IDENTITY()",
                         new SqlParameters
                         {
                             {"Content", entity.Content},
                             {"Created", entity.Created},
                             {"UserId", entity.UserId  },
+                            {"Title", entity.Title  },
                         }
                     );
 
@@ -32,12 +33,13 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         public override bool Update(Entity.BlogPost entity)
         {
             var res = base.ExecuteNonQuery(
-                    "update BlogPost set Content = @Content ,UserId = @UserId  where Id = @Id ",
+                    "update BlogPost set Content = @Content ,UserId = @UserId, Title =@Title  where Id = @Id ",
                     new SqlParameters
                     {
                         {"Content", entity.Content},
                         {"Id", entity.Id},
                         {"UserId", entity.UserId  },
+                        {"Title", entity.Title  },
                     }
                 );
 
@@ -62,7 +64,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         public Entity.BlogPost GetById(int id)
         {
             return base.ExecuteSingleRowSelect(
-                    "select bp.Id,bp.UserId,bp.Content,bp.Created from BlogPost bp where bp.Id = @Id",
+                    "select bp.Id,bp.UserId,bp.Content,bp.Created, bp.Title from BlogPost bp where bp.Id = @Id",
                     new SqlParameters()
                     {
                         {"Id",id}
@@ -85,19 +87,20 @@ namespace WorkWithDB.DAL.SqlServer.Repository
 
         public IList<BlogPost> GetAll()
         {
-            return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp ");
+            return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created, bp.Title from BlogPost bp");
         }
 
         public IList<BlogPostWithAuthor> GetAllWithUserNick()
         {
-            return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Content, bp.Created, u.Nick " +
+            return base.ExecuteSelect("Select bp.Id, bp.UserId, bp.Title, bp.Created, u.Nick " +
                                       "     from BlogPost bp " +
-                                      "     JOIN BlogUser u on bp.UserId = u.Id",
+                                      "     JOIN BlogUser u on bp.UserId = u.Id" +
+                                      "     order by bp.Created desc",
                                       reader => new BlogPostWithAuthor
                                         {
                                             Id = (int)reader["Id"],
                                             UserId = (int)reader["UserId"],
-                                            Content = (string)reader["Content"],
+                                            Title = (string)reader["Title"],
                                             Created = (DateTimeOffset)reader["Created"],
                                             AuthorNick = (string)reader["Nick"],
                                         }
@@ -115,9 +118,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                     }
                 );
         }
-
-
-
+        
 
         protected override BlogPost DefaultRowMapping(SqlDataReader reader)
         {
@@ -127,6 +128,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                 UserId = (int)reader["UserId"],
                 Content = (string)reader["Content"],
                 Created = (DateTimeOffset)reader["Created"],
+                Title = (string)reader["Title"],
             };
         }
     }

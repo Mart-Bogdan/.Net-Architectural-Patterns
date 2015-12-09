@@ -8,8 +8,9 @@ namespace WorkWithDB.Entity
 {
     public class BlogPost : BaseEntity<int>
     {
-        public int UserId {get;set;} 
-        public string Content {get;set;}
+        public int UserId { get; set; }
+        public string Content { get; set; }
+        public string Title { get; set; }
         public DateTimeOffset Created { get; set; }
 
         public BlogPost Clone()

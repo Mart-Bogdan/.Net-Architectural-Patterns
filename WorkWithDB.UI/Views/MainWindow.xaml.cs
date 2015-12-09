@@ -11,5 +11,6 @@ namespace WorkWithDB.UI.Views
         {
             InitializeComponent();
         }
+
     }
 }
