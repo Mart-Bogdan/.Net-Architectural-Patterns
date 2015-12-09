@@ -11,6 +11,15 @@ SET ARITHABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, QUOTED_IDE
 SET NUMERIC_ROUNDABORT, IMPLICIT_TRANSACTIONS, XACT_ABORT OFF
 GO
 
+SET IDENTITY_INSERT dbo.BlogUser ON
+GO
+INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (15, N'qwerty', N'Bogdan', N'winnie')
+INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (22, N'qq', N'Вася', N'w')
+INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (26, N'qwerty', N'John Smith', N'user')
+GO
+SET IDENTITY_INSERT dbo.BlogUser OFF
+GO
+
 SET IDENTITY_INSERT dbo.BlogPost ON
 GO
 INSERT dbo.BlogPost(Id, Title, Content, Created, UserId) VALUES (1, N'Post1', N'This is super cool post!
@@ -33,13 +42,4 @@ Ut scelerisque mi dui, eget pellentesque enim suscipit et. Praesent suscipit ves
 Nam ut tellus faucibus, imperdiet tortor et, consectetur tellus. Phasellus maximus velit non euismod laoreet. Ut aliquam semper elit at iaculis. Vivamus viverra congue elit, non euismod lacus volutpat vitae. Nunc faucibus ligula sed ligula sodales malesuada. Nunc arcu ligula, sollicitudin in placerat nec, varius ac ligula. Integer congue, est eu ullamcorper maximus, diam enim pretium mi, non fermentum leo turpis eu nisi. Donec maximus quam nec odio auctor, sed consequat elit porta. Cras in mauris libero. Sed condimentum luctus erat, vel pretium ante posuere vel. Sed felis orci, commodo a justo sed, varius sodales sem. Etiam porta justo id ante aliquet commodo. Mauris eu erat vel sapien dignissim blandit eget nec diam. In ut sem et neque facilisis tristique in sit amet massa. Aliquam ac diam sit amet justo faucibus luctus. Fusce eleifend risus ex, et ultricies lacus vestibulum sit amet.', '2015-12-09 02:54:32.1986124 +02:00', 26)
 GO
 SET IDENTITY_INSERT dbo.BlogPost OFF
-GO
-
-SET IDENTITY_INSERT dbo.BlogUser ON
-GO
-INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (15, N'qwerty', N'Bogdan', N'winnie')
-INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (22, N'qq', N'Вася', N'w')
-INSERT dbo.BlogUser(Id, UserPassword, Name, Nick) VALUES (26, N'qwerty', N'John Smith', N'user')
-GO
-SET IDENTITY_INSERT dbo.BlogUser OFF
 GO
