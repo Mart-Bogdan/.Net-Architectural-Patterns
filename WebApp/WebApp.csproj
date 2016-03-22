@@ -178,6 +178,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\Api\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -309,6 +310,10 @@
     <ProjectReference Include="..\WebApp.Abstract\WebApp.Abstract.csproj">
       <Project>{dc8a85a2-6375-4a8d-b836-dc885256dea3}</Project>
       <Name>WebApp.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApp.Api.Models\WebApp.Api.Models.csproj">
+      <Project>{53446174-ae40-458b-a620-fbee609375f0}</Project>
+      <Name>WebApp.Api.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebApp.BL\WebApp.BL.csproj">
       <Project>{edc34eaa-6dc6-4aab-91ba-0f248ed60beb}</Project>
