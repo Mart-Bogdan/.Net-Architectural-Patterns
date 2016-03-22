@@ -13,7 +13,7 @@ namespace WorkWithDB.Test
     {
         static void Main(string[] args)
         {
-            using (IUnitOfWork scope = new UnitOfWork())
+            using (IUnitOfWork scope = new SqlServerAdoNetUnitOfWork())
             {
                 var id = scope.BlogUserRepository.Insert(new BlogUser() { Name = "Bogdan", Nick = "winnie2", UserPassword = "!QAZ2wsx#EDC4rfv" });
                 var allUsers = scope.BlogUserRepository.GetAll();

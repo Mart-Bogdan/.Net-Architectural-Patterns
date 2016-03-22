@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\SqlParameters.cs" />
-    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="SqlServerAdoNetUnitOfWork.cs" />
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="Repository\BlogUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,7 +6,7 @@ using WorkWithDB.DAL.SqlServer.Repository;
 
 namespace WorkWithDB.DAL.SqlServer
 {
-    public class UnitOfWork : IUnitOfWork
+    public class SqlServerAdoNetUnitOfWork : IUnitOfWork
     {
         private readonly SqlTransaction _transaction;
         private readonly SqlConnection _connection;
@@ -16,7 +16,7 @@ namespace WorkWithDB.DAL.SqlServer
         /// <summary>
         /// 
         /// </summary>
-        public UnitOfWork ()
+        public SqlServerAdoNetUnitOfWork ()
 	    {
             var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
             _connection = new SqlConnection(connectionString);

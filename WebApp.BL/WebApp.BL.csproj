@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Monads.NET">
+      <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,13 +45,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlDependencyConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AccessTokenManager.cs" />
+    <Compile Include="Security\CredentialsChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebApp.Abstract\WebApp.Abstract.csproj">
       <Project>{dc8a85a2-6375-4a8d-b836-dc885256dea3}</Project>
       <Name>WebApp.Abstract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj">
+      <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
+      <Name>WorkWithDB.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.Entity\WorkWithDB.Entity.csproj">
+      <Project>{897f2f9c-7f5e-4d58-ab36-d2c9bd1e277a}</Project>
+      <Name>WorkWithDB.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
