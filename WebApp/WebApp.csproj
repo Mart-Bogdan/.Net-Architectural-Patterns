@@ -299,6 +299,28 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebApp.Abstract\WebApp.Abstract.csproj">
+      <Project>{dc8a85a2-6375-4a8d-b836-dc885256dea3}</Project>
+      <Name>WebApp.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApp.BL\WebApp.BL.csproj">
+      <Project>{edc34eaa-6dc6-4aab-91ba-0f248ed60beb}</Project>
+      <Name>WebApp.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj">
+      <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
+      <Name>WorkWithDB.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.DAL.SqlServer\WorkWithDB.DAL.SqlServer.csproj">
+      <Project>{28c9aa9c-5db8-478d-a137-47d8e281123e}</Project>
+      <Name>WorkWithDB.DAL.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.Entity\WorkWithDB.Entity.csproj">
+      <Project>{897f2f9c-7f5e-4d58-ab36-d2c9bd1e277a}</Project>
+      <Name>WorkWithDB.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
