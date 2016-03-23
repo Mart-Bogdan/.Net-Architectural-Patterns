@@ -29,7 +29,7 @@ namespace WebApp.Controllers.Api
                     return new Result<List<BlogPost>>(uow.BlogPostRepository.GetByUserId(result.Id).ToList());
                 }
             }
-            return new Result<List<BlogPost>>();
+            return Result<List<BlogPost>>.Forbidden;
         }
         [HttpGet]
         public Result<List<BlogPostWithAuthor>> GetAllWithUserNick(string userToken)
@@ -44,9 +44,25 @@ namespace WebApp.Controllers.Api
                     return new Result<List<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick().ToList());
                 }
             }
-            return new Result<List<BlogPostWithAuthor>>();
+            return Result<List<BlogPostWithAuthor>>.Forbidden;
         }
 
+        [HttpPost]
+        public Result<int> Save(string userToken,[FromBody]BlogPost currentPost)
+        {
+            var result =
+                _tokenValidator.ValidateToken(userToken);
 
+            if (result != null)
+            {
+                using (var uow = UnitOfWorkFactory.CreateInstance())
+                {
+                    int returnedVal = uow.BlogPostRepository.Insert(currentPost);
+                    uow.Commit();
+                   return new Result<int>(returnedVal);
+                }
+            }
+            return Result<int>.Forbidden;
+        }
     }
 }
