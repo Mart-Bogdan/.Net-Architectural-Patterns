@@ -5,14 +5,15 @@ namespace WebApp.Api.Models.Responces
 {
     public class Result<T>
     {
-        public static readonly Result<T> Forbidden = new Result<T>{ErrorMessage = "Forbidden",HasError = true};
+        public static readonly Result<T> Forbidden = new Result<T> { ErrorMessage = "Forbidden", HasError = true };
+        public static readonly Result<T> Unauthorized = new Result<T> { ErrorMessage = "Unauthorized", HasError = true };
 
         [JsonProperty]
-        public bool HasError { get; private set; }
+        public bool HasError { get; set; }
         [JsonProperty]
-        public string ErrorMessage { get; private set; }
+        public string ErrorMessage { get; set; }
         [JsonProperty]
-        public T Value { get; private set; }
+        public T Value { get; set; }
 
 
         public Result()

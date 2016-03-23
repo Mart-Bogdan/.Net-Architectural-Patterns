@@ -17,52 +17,66 @@ namespace WebApp.Controllers.Api
         private IAccessTokenValidator _tokenValidator = BlFactory.AccessTokenValidator;
 
         [HttpGet]
-        public Result<List<BlogPost>> GetPostsOfCurrentUser(string userToken)
+        public Result<List<BlogPost>> GetPostsOfCurrentUser(string token)
         {
-            var result =
-                _tokenValidator.ValidateToken(userToken);
+            var user =
+                _tokenValidator.ValidateToken(token);
 
-            if (result != null)
+            if (user == null) 
+                return Result<List<BlogPost>>.Unauthorized;
+
+            using (var uow = UnitOfWorkFactory.CreateInstance())
             {
-                using (var uow = UnitOfWorkFactory.CreateInstance())
-                {
-                    return new Result<List<BlogPost>>(uow.BlogPostRepository.GetByUserId(result.Id).ToList());
-                }
+                return new Result<List<BlogPost>>(uow.BlogPostRepository.GetByUserId(user.Id).ToList());
             }
-            return Result<List<BlogPost>>.Forbidden;
         }
         [HttpGet]
-        public Result<List<BlogPostWithAuthor>> GetAllWithUserNick(string userToken)
+        public Result<IList<BlogPostWithAuthor>> GetAllWithUserNick(string token)
         {
-            var result =
-                _tokenValidator.ValidateToken(userToken);
+            var user =
+                _tokenValidator.ValidateToken(token);
 
-            if (result != null)
+            if (user == null)
+                return Result<IList<BlogPostWithAuthor>>.Unauthorized;
+
+            using (var uow = UnitOfWorkFactory.CreateInstance())
             {
-                using (var uow = UnitOfWorkFactory.CreateInstance())
-                {
-                    return new Result<List<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick().ToList());
-                }
+                return new Result<IList<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick());
             }
-            return Result<List<BlogPostWithAuthor>>.Forbidden;
         }
 
         [HttpPost]
-        public Result<int> Save(string userToken,[FromBody]BlogPost currentPost)
+        public Result<int> Save([FromUri]string token, [FromBody] BlogPost post)
         {
-            var result =
-                _tokenValidator.ValidateToken(userToken);
+            var user =
+                _tokenValidator.ValidateToken(token);
 
-            if (result != null)
+            if (user == null) 
+                return Result<int>.Unauthorized;
+
+            using (var uow = UnitOfWorkFactory.CreateInstance())
             {
-                using (var uow = UnitOfWorkFactory.CreateInstance())
+                if (post.Id != 0)
                 {
-                    int returnedVal = uow.BlogPostRepository.Insert(currentPost);
-                    uow.Commit();
-                   return new Result<int>(returnedVal);
+                    var existingPost = uow.BlogPostRepository.GetById(post.Id);
+                    if (existingPost == null)
+                        return new Result<int> {ErrorMessage = "404 Incorrect ID", HasError = true};
+
+                    if (existingPost.UserId != user.Id)
+                        return Result<int>.Forbidden;
                 }
+                else
+                {
+                    post.Created = DateTimeOffset.Now;
+                }
+
+                post.UserId = user.Id;
+
+                int postId = uow.BlogPostRepository.Upsert(post);
+                uow.Commit();
+
+                return new Result<int>(postId);
             }
-            return Result<int>.Forbidden;
         }
     }
 }

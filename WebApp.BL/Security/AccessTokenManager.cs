@@ -47,9 +47,11 @@ namespace WebApp.BL.Security
 
         public UserDescriptor ValidateToken(string tokenStr)
         {
+#if DEBUG
             //TODO remove in production
             if(tokenStr == "test")
                 return new UserDescriptor(26,"user");
+#endif
 
             Guid token;
             if (Guid.TryParse(tokenStr, out token))

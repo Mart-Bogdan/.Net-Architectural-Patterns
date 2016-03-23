@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Requests\LoginModel.cs" />
+    <Compile Include="Requests\PostSaveModel.cs" />
     <Compile Include="Requests\RegisterModel.cs" />
     <Compile Include="Responces\AuthResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
