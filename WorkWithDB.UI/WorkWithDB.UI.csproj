@@ -49,6 +49,9 @@
     </Reference>
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="ReachFramework" />
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -163,6 +166,10 @@
     <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj">
       <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
       <Name>WorkWithDB.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkWithDB.DAL.Rest\WorkWithDB.DAL.Rest.csproj">
+      <Project>{A8A40C01-65D5-418B-AED4-E6A94B99D146}</Project>
+      <Name>WorkWithDB.DAL.Rest</Name>
     </ProjectReference>
     <ProjectReference Include="..\WorkWithDB.DAL.SqlServer\WorkWithDB.DAL.SqlServer.csproj">
       <Project>{28c9aa9c-5db8-478d-a137-47d8e281123e}</Project>

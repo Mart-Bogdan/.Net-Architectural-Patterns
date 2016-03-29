@@ -21,13 +21,13 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
 
         private static RestRequest BuildRequest(string resource, object body, object arguments)
         {
-            var request = new RestRequest(resource, body == null ? Method.GET : Method.POST)
+            var request = new RestRequest(resource + "?token={token}", body == null ? Method.GET : Method.POST)
             {
                 RequestFormat = DataFormat.Json
             };
 
             //if (TokenHolder.AuthToken != null)
-            request.AddParameter("token", TokenHolder.AuthToken);
+            request.AddParameter("token", TokenHolder.AuthToken??"", ParameterType.UrlSegment);
 
             if (body != null) 
                 request.AddBody(body);

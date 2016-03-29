@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.Rest;
 using WorkWithDB.DAL.SqlServer;
 
 namespace WorkWithDB.UI
@@ -17,7 +18,7 @@ namespace WorkWithDB.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            UnitOfWorkFactory.__Initialize(()=>new SqlServerAdoNetUnitOfWork());
+            UnitOfWorkFactory.__Initialize(()=>new RestUnitOfWork());
         }
     }
 }
