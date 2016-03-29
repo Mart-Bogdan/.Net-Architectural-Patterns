@@ -1,84 +1,91 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 using RestSharp;
+using RestSharpJsonNet;
 using WebApp.Api.Models.Responces;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.Rest.Infrastructure;
 using WorkWithDB.Entity;
 using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.Rest.Repository
 {
-    public class BlogPostRepository : IBlogPostRepository
+    public class BlogPostRepository : BaseRestRepository<int,BlogPost>, IBlogPostRepository
     {
-        public List<BlogPost> GetPostsOfCurrentUser(string token)
+        public IList<BlogPostWithAuthor> GetAllWithUserNick()
         {
-            var client = new RestClient("http://localhost:17017");
+            var result = ExecuteRequest<List<BlogPostWithAuthor>>("BlogPost/GetAllWithUserNick");
 
-            var request = new RestRequest("api/BlogPost/GetPostsOfCurrentUser", Method.GET);
-            request.AddParameter("token", token);
-
-            var response = client.Execute<Result<List<BlogPost>>>(request);
-
-            return response.Data.Value;
+            return result;
         }
 
-        public List<BlogPostWithAuthor> GetAllWithUserNick(string token)
+        private int SaveImpl( BlogPost post)
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<int>("BlogPost/Save",body:post);
         }
 
-        public int Save(string token, BlogPost post)
+        public override int Insert(BlogPost entity)
         {
-            throw new System.NotImplementedException();
+            var post = entity.Clone();
+            post.Id = 0;
+            return SaveImpl(post);
         }
 
-        public int Insert(BlogPost entity)
+        public override bool Update(BlogPost entity)
         {
-            throw new System.NotImplementedException();
+            if (entity.Id == 0)
+                return false;
+
+            try
+            {
+                var post = entity.Clone();
+                return SaveImpl(post) == post.Id;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("404"))
+                    return false;
+                throw;
+            }
         }
 
-        public bool Update(BlogPost entity)
+        public override int Upsert(BlogPost entity)
         {
-            throw new System.NotImplementedException();
+            return SaveImpl(entity.Clone());
         }
 
-        public int Upsert(BlogPost entity)
+        public override int GetCount()
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<int>("BlogPost/Count");
         }
 
-        public int GetCount()
+        public override BlogPost GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<BlogPost>("BlogPost/Get", arguments:new{ id } );
         }
 
-        public BlogPost GetById(int id)
+        public override bool Delete(int id)
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<bool>("BlogPost/Delete", arguments: new { id });
         }
 
-        public bool Delete(int id)
+        public override IList<BlogPost> GetAll()
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<List<BlogPost>>("BlogPost/GetAll");
         }
 
-        public IList<BlogPost> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        //TODO No API endpoint
         public IList<BlogPost> GetByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            return GetAll().Where(post => post.UserId == userId).ToList();
         }
 
         public int GetCountByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            return ExecuteRequest<int>("BlogPost/CountByUserId", arguments: new { userId });
         }
 
-        public IList<BlogPostWithAuthor> GetAllWithUserNick()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

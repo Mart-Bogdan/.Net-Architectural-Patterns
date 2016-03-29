@@ -34,9 +34,9 @@ namespace WorkWithDB.Test
                 //    Nick = "Vasya",
                 //    Password = "qwerty"
                 //});
-                //scope.AuthRepository.Login(new LoginModel(){Nick = "user",Password = "qwerty"});
+                var user = scope.AuthRepository.Login( "user","qwerty");
 
-                var postsOfCurrentUser = (scope.BlogPostRepository as BlogPostRepository).GetPostsOfCurrentUser("");
+                var posts = scope.BlogPostRepository.GetAllWithUserNick();
             }
         }
     }

@@ -7,58 +7,41 @@ using RestSharpJsonNet;
 using WebApp.Api.Models.Requests;
 using WebApp.Api.Models.Responces;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.Rest.Infrastructure;
 using WorkWithDB.Entity;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WorkWithDB.DAL.Rest.Repository
 {
-    public class AuthRepository : IAuthRepository
+    public class AuthRepository : BaseRestOperations, IAuthRepository
     {
         private ISerializer _serializer = new RestSharpJsonNetSerializer(new JsonSerializer());
 
         public BlogUser Login(string login, string password)
         {
-            var client = new RestClient("http://localhost:17017");
+            var result = ExecuteRequestRaw<AuthResult>(
+                "Auth/Login", 
+                new
+                {
+                    Nick = login,
+                    Password = password
+                }
+            );
 
-            var request = new RestRequest("api/Auth/Login", Method.POST)
-            {
-                RequestFormat = DataFormat.Json
-            };
-            request.AddBody(new { Nick = login, Password = password });
+            TokenHolder.AuthToken = result.Token;
 
-            IRestResponse<AuthResult> response = client.Execute<AuthResult>(request);
-
-            ValidateResponce(response);
-            return response.Data.User;
+            return result.User;
         }
 
         public BlogUser Register(BlogUser user)
         {
-            var client = new RestClient("http://localhost:17017");
+            var result = ExecuteRequestRaw<AuthResult>(
+                "Auth/Register",
+                user.Clone()
+            );
+            TokenHolder.AuthToken = result.Token;
 
-            var request = new RestRequest("api/Auth/Register", Method.POST)
-            {
-                RequestFormat = DataFormat.Json
-            };
-            request.AddBody(user.Clone());
-
-            IRestResponse<AuthResult> response = client.Execute<AuthResult>(request);
-
-            ValidateResponce(response);
-
-
-            return response.Data.User;
-        }
-
-        private static void ValidateResponce(IRestResponse<AuthResult> response)
-        {
-            if (response.ResponseStatus != ResponseStatus.Completed)
-                if (response.ErrorException != null)
-                    throw response.ErrorException;
-                else throw new Exception(response.ErrorMessage);
-
-            if (response.StatusCode != HttpStatusCode.OK)
-                throw new Exception(response.Content);
+            return result.User;
         }
     }
 }
