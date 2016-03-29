@@ -49,12 +49,12 @@ namespace WorkWithDB.UI.ViewModels
                     {
                         using (var uow = UnitOfWorkFactory.CreateInstance())
                         {
-                            var userRepository = uow.BlogUserRepository;
+                            var userRepository = uow.AuthRepository;
 
-                            var userId = userRepository.Insert(this);
+                            var user = userRepository.Register(this.Clone());
                             uow.Commit();
 
-                            StateHolder.CurrentUser = userRepository.GetById(userId);
+                            StateHolder.CurrentUser = user;
 
                             w.Close();
 

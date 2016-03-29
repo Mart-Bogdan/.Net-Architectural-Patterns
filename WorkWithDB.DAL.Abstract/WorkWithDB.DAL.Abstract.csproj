@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAuthRepository.cs" />
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="IBlogPostRepository.cs" />
     <Compile Include="IBlogUserRepository.cs" />

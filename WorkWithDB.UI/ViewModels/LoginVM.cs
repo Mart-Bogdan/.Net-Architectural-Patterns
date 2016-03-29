@@ -30,8 +30,8 @@ namespace WorkWithDB.UI.ViewModels
 
                         using (var uow = UnitOfWorkFactory.CreateInstance())
                         {
-                            var userRepository = uow.BlogUserRepository;
-                            var user = userRepository.GetByLoginPassword(login, password);
+                            var userRepository = uow.AuthRepository;
+                            var user = userRepository.Login(login, password);
                             if (user == null)
                             {
                                 MessageBox.Show("Incorrect credentials");

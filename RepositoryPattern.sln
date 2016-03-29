@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.Tester", "WorkWi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3804AABD-B9A6-44B5-B320-3EB902DB5080}"
 	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 		SQLGenerationScript.sql = SQLGenerationScript.sql
 	EndProjectSection
 EndProject

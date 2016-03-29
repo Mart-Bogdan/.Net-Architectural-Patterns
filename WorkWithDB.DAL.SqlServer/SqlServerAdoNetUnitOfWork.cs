@@ -13,6 +13,8 @@ namespace WorkWithDB.DAL.SqlServer
 
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
+        private IAuthRepository     _authRepository;
+
         /// <summary>
         /// 
         /// </summary>
@@ -41,6 +43,16 @@ namespace WorkWithDB.DAL.SqlServer
                 if (_blogUserRepository == null)
                     _blogUserRepository = new BlogUserRepository(_connection, _transaction);
                 return _blogUserRepository;
+            }
+        }
+
+        public IAuthRepository AuthRepository
+        {
+            get
+            {
+                if (_authRepository == null)
+                    _authRepository = new AuthRepository(this);
+                return _authRepository;
             }
         }
 

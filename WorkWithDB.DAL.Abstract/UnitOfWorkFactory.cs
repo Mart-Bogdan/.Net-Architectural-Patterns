@@ -22,5 +22,6 @@ namespace WorkWithDB.DAL.Abstract
         {
             _factory = factory;
         }
+
     }
 }
