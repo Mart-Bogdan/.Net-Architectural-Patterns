@@ -15,21 +15,20 @@ namespace WebApp.Controllers.Api
     public class BlogPostController : ApiController
     {
         private IAccessTokenValidator _tokenValidator = BlFactory.AccessTokenValidator;
+        private IUnitOfWork uow = UnitOfWorkFactory.CreateInstance();
 
         [HttpGet]
-        public Result<List<BlogPost>> GetPostsOfCurrentUser(string token)
+        public Result<IList<BlogPost>> GetPostsOfCurrentUser(string token)
         {
             var user =
                 _tokenValidator.ValidateToken(token);
 
-            if (user == null) 
-                return Result<List<BlogPost>>.Unauthorized;
-
-            using (var uow = UnitOfWorkFactory.CreateInstance())
-            {
-                return new Result<List<BlogPost>>(uow.BlogPostRepository.GetByUserId(user.Id).ToList());
-            }
+            if (user == null)
+                return Result<IList<BlogPost>>.Unauthorized;
+            
+            return new Result<IList<BlogPost>>(uow.BlogPostRepository.GetByUserId(user.Id));
         }
+
         [HttpGet]
         public Result<IList<BlogPostWithAuthor>> GetAllWithUserNick(string token)
         {
@@ -39,10 +38,20 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<IList<BlogPostWithAuthor>>.Unauthorized;
 
-            using (var uow = UnitOfWorkFactory.CreateInstance())
-            {
-                return new Result<IList<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick());
-            }
+            return new Result<IList<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick());
+        }
+
+        //TODO this should be disabled in production, to big overhead on DB and network
+        [HttpGet]
+        public Result<IList<BlogPost>> GetAll(string token)
+        {
+            var user =
+                _tokenValidator.ValidateToken(token);
+
+            if (user == null)
+                return Result<IList<BlogPost>>.Unauthorized;
+
+            return new Result<IList<BlogPost>>(uow.BlogPostRepository.GetAll());
         }
 
         [HttpPost]
@@ -54,29 +63,85 @@ namespace WebApp.Controllers.Api
             if (user == null) 
                 return Result<int>.Unauthorized;
 
-            using (var uow = UnitOfWorkFactory.CreateInstance())
+            if (post.Id != 0)
             {
-                if (post.Id != 0)
-                {
-                    var existingPost = uow.BlogPostRepository.GetById(post.Id);
-                    if (existingPost == null)
-                        return new Result<int> {ErrorMessage = "404 Incorrect ID", HasError = true};
+                var existingPost = uow.BlogPostRepository.GetById(post.Id);
+                if (existingPost == null)
+                    return new Result<int> {ErrorMessage = "404 Incorrect ID", HasError = true};
 
-                    if (existingPost.UserId != user.Id)
-                        return Result<int>.Forbidden;
-                }
-                else
-                {
-                    post.Created = DateTimeOffset.Now;
-                }
-
-                post.UserId = user.Id;
-
-                int postId = uow.BlogPostRepository.Upsert(post);
-                uow.Commit();
-
-                return new Result<int>(postId);
+                if (existingPost.UserId != user.Id)
+                    return Result<int>.Forbidden;
             }
+            else
+            {
+                post.Created = DateTimeOffset.Now;
+            }
+
+            post.UserId = user.Id;
+
+            int postId = uow.BlogPostRepository.Upsert(post);
+            uow.Commit();
+
+            return postId;
+            
+        }
+
+
+        [HttpGet]
+        public Result<int> Count([FromUri] string token)
+        {
+            var user =
+                _tokenValidator.ValidateToken(token);
+
+            if (user == null)
+                return Result<int>.Unauthorized;
+
+            return uow.BlogPostRepository.GetCount();
+
+        }
+
+
+        [HttpGet]
+        public Result<int> CountByUserId([FromUri] string token, [FromUri] int userId)
+        {
+            var user =
+                _tokenValidator.ValidateToken(token);
+
+            if (user == null)
+                return Result<int>.Unauthorized;
+
+            return uow.BlogPostRepository.GetCountByUserId(userId);
+
+        }
+        [HttpGet]
+        public Result<BlogPost> Get([FromUri] string token, [FromUri] int id)
+        {
+            var user =
+                _tokenValidator.ValidateToken(token);
+
+            if (user == null)
+                return Result<BlogPost>.Unauthorized;
+
+            return uow.BlogPostRepository.GetById(id);
+        }
+        [HttpGet]
+        public Result<bool> Delete([FromUri] string token, [FromUri] int id)
+        {
+            var user =
+                _tokenValidator.ValidateToken(token);
+
+            if (user == null)
+                return Result<bool>.Unauthorized;
+
+            return uow.BlogPostRepository.Delete(id);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                uow.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }

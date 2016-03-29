@@ -10,7 +10,7 @@ namespace WebApp.Controllers.Api
 {
     public class AuthController : ApiController
     {
-        private IUnitOfWork _unit = UnitOfWorkFactory.CreateInstance();
+        private IUnitOfWork uow = UnitOfWorkFactory.CreateInstance();
 
         [HttpPost]
         public AuthResult Login(LoginModel model)
@@ -23,7 +23,7 @@ namespace WebApp.Controllers.Api
             {
                 var token = BlFactory.AccessTokenGenerator.GenerateToken(userId.Value, model.Nick);
 
-                var blogUser = _unit.BlogUserRepository.GetById(userId.Value);
+                var blogUser = uow.BlogUserRepository.GetById(userId.Value);
                 
                 return new AuthResult {Token = token, Message = "Ok", User = blogUser};
             }
@@ -43,16 +43,16 @@ namespace WebApp.Controllers.Api
                 string.IsNullOrWhiteSpace(model.Password))
                 return new AuthResult {Message = "Incorrect fields!"};
 
-            var userRepository = _unit.BlogUserRepository;
+            var userRepository = uow.BlogUserRepository;
             var user = new BlogUser {Nick = model.Nick, UserPassword = model.Password, Name = model.Name};
             var userId = userRepository.Insert(user);
             if (userId > 0)
             {
-                _unit.Commit();
+                uow.Commit();
 
                 var token = BlFactory.AccessTokenGenerator.GenerateToken(userId, model.Nick);
 
-                var blogUser = _unit.BlogUserRepository.GetById(userId);
+                var blogUser = uow.BlogUserRepository.GetById(userId);
                 
                 return new AuthResult {Token = token, Message = "Ok", User = blogUser};
             }
@@ -63,7 +63,7 @@ namespace WebApp.Controllers.Api
         protected override void Dispose(bool disposing)
         {
             if(disposing)
-                _unit.Dispose();
+                uow.Dispose();
 
             base.Dispose(disposing);
         }

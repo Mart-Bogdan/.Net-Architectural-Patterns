@@ -24,5 +24,10 @@ namespace WebApp.Api.Models.Responces
         {
             Value = value;
         }
+
+        public static implicit operator Result<T>(T value)
+        {
+            return new Result<T>(value);
+        }
     }
 }
