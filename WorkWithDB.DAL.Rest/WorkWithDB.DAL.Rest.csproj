@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AAB5E041-2CF9-477B-978E-36ACA13EF5C6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{A8A40C01-65D5-418B-AED4-E6A94B99D146}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkWithDB.Test</RootNamespace>
-    <AssemblyName>WorkWithDB.Test</AssemblyName>
+    <RootNamespace>WorkWithDB.DAL.Rest</RootNamespace>
+    <AssemblyName>WorkWithDB.DAL.Rest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -45,17 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Repository\AuthRepository.cs" />
+    <Compile Include="RestUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BlogPostRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\RestSharpJsonNet\RestSharpJsonNet.csproj">
+      <Project>{310D5AE3-A437-419E-8F14-A9E487E9DF60}</Project>
+      <Name>RestSharpJsonNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApp.Api.Models\WebApp.Api.Models.csproj">
       <Project>{53446174-AE40-458B-A620-FBEE609375F0}</Project>
       <Name>WebApp.Api.Models</Name>
@@ -65,21 +66,16 @@
       <Name>WorkWithDB.DAL.Abstract.Rest</Name>
     </ProjectReference>
     <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj">
-      <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
+      <Project>{B1052A7E-B6CA-4521-A5A1-18044560B159}</Project>
       <Name>WorkWithDB.DAL.Abstract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkWithDB.DAL.Rest\WorkWithDB.DAL.Rest.csproj">
-      <Project>{A8A40C01-65D5-418B-AED4-E6A94B99D146}</Project>
-      <Name>WorkWithDB.DAL.Rest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WorkWithDB.Entity\WorkWithDB.Entity.csproj">
-      <Project>{897f2f9c-7f5e-4d58-ab36-d2c9bd1e277a}</Project>
+      <Project>{897F2F9C-7F5E-4D58-AB36-D2C9BD1E277A}</Project>
       <Name>WorkWithDB.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkWithDB.DAL.SqlServer\WorkWithDB.DAL.SqlServer.csproj">
-      <Project>{28c9aa9c-5db8-478d-a137-47d8e281123e}</Project>
-      <Name>WorkWithDB.DAL.SqlServer</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
