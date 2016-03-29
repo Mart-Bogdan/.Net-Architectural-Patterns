@@ -1,10 +1,10 @@
 ﻿using System;
-using WorkWithDB.DAL.Abstract.Rest;
+using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.Rest.Repository;
 
 namespace WorkWithDB.DAL.Rest
 {
-    public class RestUnitOfWork : IRestUnitOfWork
+    public class RestUnitOfWork : IUnitOfWork
     {
         private IBlogPostRepository _blogPostRepository;
         private IAuthRepository _authRepository;
@@ -20,6 +20,8 @@ namespace WorkWithDB.DAL.Rest
             }
         }
 
+        public IBlogUserRepository BlogUserRepository { get; private set; }
+
         public IAuthRepository AuthRepository
         {
             get
@@ -30,10 +32,24 @@ namespace WorkWithDB.DAL.Rest
             }
         }
 
+        /// <summary>
+        /// Unsupported in REST version
+        /// </summary>
+        public void Commit()
+        {
+        }
+
+
+        /// <summary>
+        /// Unsupported in REST version
+        /// </summary>
+        public void RollBack()
+        {
+        }
+
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

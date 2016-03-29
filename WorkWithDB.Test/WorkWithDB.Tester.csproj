@@ -60,10 +60,6 @@
       <Project>{53446174-AE40-458B-A620-FBEE609375F0}</Project>
       <Name>WebApp.Api.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkWithDB.DAL.Abstract.Rest\WorkWithDB.DAL.Abstract.Rest.csproj">
-      <Project>{63AFD2A5-4D42-4D7B-99C3-B04CAFC5CA63}</Project>
-      <Name>WorkWithDB.DAL.Abstract.Rest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj">
       <Project>{b1052a7e-b6ca-4521-a5a1-18044560b159}</Project>
       <Name>WorkWithDB.DAL.Abstract</Name>

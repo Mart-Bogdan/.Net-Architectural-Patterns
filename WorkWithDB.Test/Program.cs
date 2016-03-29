@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApp.Api.Models.Requests;
 using WorkWithDB.DAL.Abstract;
-using WorkWithDB.DAL.Abstract.Rest;
+
 using WorkWithDB.DAL.Rest;
+using WorkWithDB.DAL.Rest.Repository;
 using WorkWithDB.DAL.SqlServer;
 using WorkWithDB.Entity;
 
@@ -25,7 +26,7 @@ namespace WorkWithDB.Test
 
             //    scope.Commit();
             //}
-            using (IRestUnitOfWork scope = new RestUnitOfWork())
+            using (RestUnitOfWork scope = new RestUnitOfWork())
             {
                 //scope.AuthRepository.Register(new RegisterModel()
                 //{
@@ -35,7 +36,7 @@ namespace WorkWithDB.Test
                 //});
                 //scope.AuthRepository.Login(new LoginModel(){Nick = "user",Password = "qwerty"});
 
-                scope.BlogPostRepository.GetPostsOfCurrentUser("");
+                var postsOfCurrentUser = (scope.BlogPostRepository as BlogPostRepository).GetPostsOfCurrentUser("");
             }
         }
     }
