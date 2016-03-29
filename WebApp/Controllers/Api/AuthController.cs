@@ -10,6 +10,8 @@ namespace WebApp.Controllers.Api
 {
     public class AuthController : ApiController
     {
+        private IUnitOfWork _unit = UnitOfWorkFactory.CreateInstance();
+
         [HttpPost]
         public AuthResult Login(LoginModel model)
         {
@@ -21,7 +23,9 @@ namespace WebApp.Controllers.Api
             {
                 var token = BlFactory.AccessTokenGenerator.GenerateToken(userId.Value, model.Nick);
 
-                return new AuthResult {Token = token, Message = "Ok"};
+                var blogUser = _unit.BlogUserRepository.GetById(userId.Value);
+                
+                return new AuthResult {Token = token, Message = "Ok", User = blogUser};
             }
 
             return new AuthResult {Message = "Unauthorized!"};
@@ -35,25 +39,33 @@ namespace WebApp.Controllers.Api
                 throw new ArgumentNullException("model");
 
 
-            if(String.IsNullOrWhiteSpace(model.Name)||String.IsNullOrWhiteSpace(model.Nick)||string.IsNullOrWhiteSpace(model.Password))
-                return new AuthResult { Message = "Incorrect fields!" };
+            if (String.IsNullOrWhiteSpace(model.Name) || String.IsNullOrWhiteSpace(model.Nick) ||
+                string.IsNullOrWhiteSpace(model.Password))
+                return new AuthResult {Message = "Incorrect fields!"};
 
-            using (var uow = UnitOfWorkFactory.CreateInstance())
+            var userRepository = _unit.BlogUserRepository;
+            var user = new BlogUser {Nick = model.Nick, UserPassword = model.Password, Name = model.Name};
+            var userId = userRepository.Insert(user);
+            if (userId > 0)
             {
-                var userRepository = uow.BlogUserRepository;
-                var user = new BlogUser {Nick = model.Nick, UserPassword = model.Password,Name = model.Name};
-                var userId = userRepository.Insert(user);
-                if (userId > 0)
-                {
-                    uow.Commit();
+                _unit.Commit();
 
-                    var token = BlFactory.AccessTokenGenerator.GenerateToken(userId, model.Nick);
+                var token = BlFactory.AccessTokenGenerator.GenerateToken(userId, model.Nick);
 
-                    return new AuthResult { Token = token, Message = "Ok" };
-                }
+                var blogUser = _unit.BlogUserRepository.GetById(userId);
+                
+                return new AuthResult {Token = token, Message = "Ok", User = blogUser};
             }
 
-            return new AuthResult { Message = "Can't save user!" };
+            return new AuthResult {Message = "Can't save user!"};
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+                _unit.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }
