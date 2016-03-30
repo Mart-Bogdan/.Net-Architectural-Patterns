@@ -111,7 +111,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         public IList<Entity.BlogPost> GetByUserId(int userId)
         {
             return base.ExecuteSelect(
-                "Select bp.Id, bp.UserId, bp.Content, bp.Created from BlogPost bp where bp.UserId = @userId",
+                "Select bp.Id, bp.UserId, bp.Content, bp.Created,bp.Title from BlogPost bp where bp.UserId = @userId",
                 new SqlParameters()
                     {
                         {"userId", userId}
