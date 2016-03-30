@@ -1,0 +1,28 @@
+﻿@model IList<WorkWithDB.Entity.Views.BlogPostWithAuthor>
+
+@{
+    ViewBag.Title = "Blog posts";
+}
+
+<h2>title</h2>
+<table>
+    <thead>
+        <td>Title</td>
+        <td>Author</td>
+    </th>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(post.Title,"Get",new {id=post.Id})
+                   
+                </td>
+                <td>@post.AuthorNick</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>

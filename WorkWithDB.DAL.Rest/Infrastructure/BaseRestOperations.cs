@@ -10,7 +10,8 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
 {
     public class BaseRestOperations
     {
-        static readonly string ApiUrl = ConfigurationManager.AppSettings["api_endpopint"] ?? "http://localhost:17017/api/";
+        static readonly string ApiUrl 
+            = ConfigurationManager.AppSettings["api_endpopint"] ?? "http://localhost:17017/api/";
 
         protected RestClient Client;
 
