@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 
 namespace WorkWithDB.DAL.SqlServer.Infrastructure
@@ -22,11 +23,18 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
         {
             if (_transaction != null) 
                 _transaction.Dispose();
+            _transaction = null;
         }
 
-        public void Begin()
+        public IDisposable Begin()
         {
+            if (_transaction != null)
+            {
+                //TODO add nested TX, aka. checkpoints support
+                _transaction.Dispose();
+            }
             _transaction = _connection.BeginTransaction(/*IsolationLevel.ReadCommitted*/);
+            return this;
         }
         
         public void Commit()

@@ -60,19 +60,18 @@ namespace WorkWithDB.UI.ViewModels
                     w =>
                     {
                         using (var unitOfWork = UnitOfWorkFactory.CreateInstance())
+                        using (unitOfWork.TransactionManager.Begin()) // will auto rollback if not commited
                         {
                             var post = _post ?? new BlogPost(){UserId = StateHolder.CurrentUser.Id, Created = DateTimeOffset.Now};
                             
                             post.Content = Content;
                             post.Title = Title;
 
-                            unitOfWork.TransactionManager.Begin();
-
                             unitOfWork.BlogPostRepository.Upsert(post);
 
                             unitOfWork.TransactionManager.Commit();
                             //unitOfWork.TransactionManager.RollBack();
-
+                                   
                             w.DialogResult = true;
                             w.Close();
                         }

@@ -1,4 +1,5 @@
-﻿using WorkWithDB.DAL.Abstract;
+﻿using System;
+using WorkWithDB.DAL.Abstract;
 
 namespace WorkWithDB.DAL.Rest.Infrastructure
 {
@@ -9,7 +10,10 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
     {
         public void Dispose(){}
 
-        public void Begin(){}
+        public IDisposable Begin()
+        {
+            return this;
+        }
 
         public void Commit(){}
 

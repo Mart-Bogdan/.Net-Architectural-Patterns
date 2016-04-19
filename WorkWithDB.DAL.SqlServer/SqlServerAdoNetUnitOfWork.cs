@@ -72,6 +72,9 @@ namespace WorkWithDB.DAL.SqlServer
 
         public void Dispose()
         {
+            if(_transactionManager!=null)
+                _transactionManager.Dispose();
+
             _connection.Dispose();    
         }
     }
