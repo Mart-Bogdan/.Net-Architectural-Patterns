@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace WebApp.App_Start
         /// </summary>
         public static void Start() 
         {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+           // DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(bootstrapper.Kernel);
@@ -91,7 +92,7 @@ namespace WebApp.App_Start
         /// </summary>
         private readonly IResolutionRoot resolutionRoot;
 
-        private ConcurrentBag<object> _services=new ConcurrentBag<object>();
+        private List<object> _services = new List<object>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Ninject.Web.WebApi.NinjectDependencyResolver"/> class.
@@ -114,7 +115,8 @@ namespace WebApp.App_Start
             var service = this.resolutionRoot.Resolve(request).SingleOrDefault();
             if (service != null)
             {
-                _services.Add(service);
+                lock (((ICollection)_services).SyncRoot)
+                    _services.Add(service);
             }
 
             return service;
@@ -137,16 +139,15 @@ namespace WebApp.App_Start
 
         public void Dispose()
         {
-            foreach (var service in _services)
+            lock (((ICollection) _services).SyncRoot)
             {
-                resolutionRoot.Release(service);
-            }
+                foreach (var service in _services)
+                {
+                    resolutionRoot.Release(service);
+                }
 
-            new Thread(() =>
-            {
-                Thread.Sleep(1500);
-                GC.Collect();
-            });
+                _services.Clear();
+            }
         }
     }
 }
