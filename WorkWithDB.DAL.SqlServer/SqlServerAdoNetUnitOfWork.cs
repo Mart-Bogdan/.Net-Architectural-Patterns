@@ -20,9 +20,8 @@ namespace WorkWithDB.DAL.SqlServer
         /// 
         /// </summary>
         public SqlServerAdoNetUnitOfWork ()
-	    {
-            var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-            _connection = new SqlConnection(connectionString);
+        {
+            _connection = SqlConnectionFactory.CreateConnection();
             _connection.Open();
         }
 

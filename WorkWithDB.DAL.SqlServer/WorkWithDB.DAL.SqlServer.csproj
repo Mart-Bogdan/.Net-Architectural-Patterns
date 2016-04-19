@@ -46,6 +46,7 @@
     <Compile Include="Repository\AuthRepository.cs" />
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\SqlParameters.cs" />
+    <Compile Include="SqlConnectionFactory.cs" />
     <Compile Include="SqlServerAdoNetUnitOfWork.cs" />
     <Compile Include="Repository\BlogPostRepository.cs" />
     <Compile Include="Repository\BlogUserRepository.cs" />
