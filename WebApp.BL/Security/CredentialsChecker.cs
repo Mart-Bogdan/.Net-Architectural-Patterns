@@ -11,16 +11,20 @@ namespace WebApp.BL.Security
 {
     class CredentialsChecker : ICredentialsChecker
     {
+        private readonly IBlogUserRepository _userRepository;
+
+        public CredentialsChecker(IBlogUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public int? CheckUserExist(string userName, string userPassword)
         {
-            using (var unitOfWork = UnitOfWorkFactory.CreateInstance())
-            {
-                var blogUser = unitOfWork.BlogUserRepository.GetByLoginPassword(userName, userPassword);
-                if (blogUser != null)
-                    return blogUser.Id;
-                else
-                    return null;
-            }
+            var blogUser = _userRepository.GetByLoginPassword(userName, userPassword);
+            if (blogUser != null)
+                return blogUser.Id;
+            else
+                return null;
         }
     }
 }

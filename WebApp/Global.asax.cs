@@ -19,10 +19,6 @@ namespace WebApp
     {
         protected void Application_Start()
         {
-            UnitOfWorkFactory.__Initialize(() => new SqlServerAdoNetUnitOfWork());
-
-            BlDependencyConfig.RegisterDependency();
-
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

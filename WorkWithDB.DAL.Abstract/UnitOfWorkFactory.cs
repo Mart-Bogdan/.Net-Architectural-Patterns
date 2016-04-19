@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkWithDB.DAL.Abstract
 {
+    [Obsolete]
     public static class UnitOfWorkFactory
     {
         private static Func<IUnitOfWork> _factory;

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
@@ -7,6 +8,7 @@ using WorkWithDB.DAL.SqlServer.Repository;
 
 namespace WorkWithDB.DAL.SqlServer
 {
+    [Obsolete("This class is left for use by non DI aware clients, like our UI application")]
     public class SqlServerAdoNetUnitOfWork : IUnitOfWork
     {
         private readonly SqlConnection _connection;

@@ -6,6 +6,8 @@ static internal class SqlConnectionFactory
     public static SqlConnection CreateConnection()
     {
         var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-        return new SqlConnection(connectionString);
+        var connection = new SqlConnection(connectionString);
+        connection.Open();
+        return connection;
     }
 }
