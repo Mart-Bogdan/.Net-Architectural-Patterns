@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
 using System.Web.Http.Services;
@@ -140,6 +141,12 @@ namespace WebApp.App_Start
             {
                 resolutionRoot.Release(service);
             }
+
+            new Thread(() =>
+            {
+                Thread.Sleep(1500);
+                GC.Collect();
+            });
         }
     }
 }
