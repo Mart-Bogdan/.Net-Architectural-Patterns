@@ -52,7 +52,6 @@ namespace WorkWithDB.UI.ViewModels
                             var userRepository = uow.AuthRepository;
 
                             var user = userRepository.Register(this.Clone());
-                            uow.Commit();
 
                             StateHolder.CurrentUser = user;
 

@@ -46,6 +46,7 @@
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="IBlogPostRepository.cs" />
     <Compile Include="IBlogUserRepository.cs" />
+    <Compile Include="ITransactionManager.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />

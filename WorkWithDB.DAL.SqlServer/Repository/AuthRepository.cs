@@ -5,23 +5,23 @@ namespace WorkWithDB.DAL.SqlServer.Repository
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly SqlServerAdoNetUnitOfWork _unit;
+        private IBlogUserRepository _blogUserRepository;
 
-        public AuthRepository(SqlServerAdoNetUnitOfWork unit)
+        public AuthRepository(IBlogUserRepository blogUserRepository)
         {
-            _unit = unit;
+            _blogUserRepository = blogUserRepository;
         }
 
         public BlogUser Login(string login, string password)
         {
-            return _unit.BlogUserRepository.GetByLoginPassword(login, password);
+            return _blogUserRepository.GetByLoginPassword(login, password);
         }
 
         public BlogUser Register(BlogUser user)
         {
-            var id = _unit.BlogUserRepository.Insert(user);
+            var id = _blogUserRepository.Insert(user);
 
-            return _unit.BlogUserRepository.GetById(id);
+            return _blogUserRepository.GetById(id);
         }
     }
 }

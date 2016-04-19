@@ -7,7 +7,6 @@ namespace WorkWithDB.DAL.Abstract
         IBlogPostRepository BlogPostRepository { get; }
         IBlogUserRepository BlogUserRepository { get; }
         IAuthRepository     AuthRepository     { get; }
-        void Commit();
-        void RollBack();
+        ITransactionManager TransactionManager { get; }
     }
 }

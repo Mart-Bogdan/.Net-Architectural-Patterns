@@ -1,5 +1,6 @@
 ﻿using System;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.Rest.Infrastructure;
 using WorkWithDB.DAL.Rest.Repository;
 
 namespace WorkWithDB.DAL.Rest
@@ -30,6 +31,11 @@ namespace WorkWithDB.DAL.Rest
                     _authRepository = new AuthRepository();
                 return _authRepository;
             }
+        }
+
+        public ITransactionManager TransactionManager
+        {
+            get { return new DummyTxManager(); }
         }
 
         /// <summary>

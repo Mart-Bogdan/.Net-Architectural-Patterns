@@ -62,13 +62,16 @@ namespace WorkWithDB.UI.ViewModels
                         using (var unitOfWork = UnitOfWorkFactory.CreateInstance())
                         {
                             var post = _post ?? new BlogPost(){UserId = StateHolder.CurrentUser.Id, Created = DateTimeOffset.Now};
-
+                            
                             post.Content = Content;
                             post.Title = Title;
 
+                            unitOfWork.TransactionManager.Begin();
+
                             unitOfWork.BlogPostRepository.Upsert(post);
 
-                            unitOfWork.Commit();
+                            unitOfWork.TransactionManager.Commit();
+                            //unitOfWork.TransactionManager.RollBack();
 
                             w.DialogResult = true;
                             w.Close();

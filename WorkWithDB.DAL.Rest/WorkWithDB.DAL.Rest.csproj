@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DummyTxManager.cs" />
     <Compile Include="Repository\AuthRepository.cs" />
     <Compile Include="Infrastructure\BaseRestOperations.cs" />
     <Compile Include="Infrastructure\BaseRestRepository.cs" />

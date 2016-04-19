@@ -11,7 +11,8 @@ namespace WorkWithDB.DAL.SqlServer.Repository
     internal class BlogPostRepository : BaseRepository<int,BlogPost>, IBlogPostRepository 
     {
 
-        public BlogPostRepository(SqlConnection connection, SqlTransaction transaction):base(connection,transaction)
+        public BlogPostRepository(SqlConnection connection, SqlTransactionManager transactionManager)
+            : base(connection, transactionManager)
         {}
 
         public override int Insert(Entity.BlogPost entity)

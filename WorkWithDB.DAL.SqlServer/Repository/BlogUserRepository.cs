@@ -9,7 +9,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
 {
     internal class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
-        public BlogUserRepository(SqlConnection connection, SqlTransaction transaction) : base(connection, transaction) { }
+        public BlogUserRepository(SqlConnection connection, SqlTransactionManager transactionManager) : base(connection, transactionManager) { }
 
         public override int Insert(Entity.BlogUser entity)
         {

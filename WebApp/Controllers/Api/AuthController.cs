@@ -38,7 +38,6 @@ namespace WebApp.Controllers.Api
             if (model == null)
                 throw new ArgumentNullException("model");
 
-
             if (String.IsNullOrWhiteSpace(model.Name) || String.IsNullOrWhiteSpace(model.Nick) ||
                 string.IsNullOrWhiteSpace(model.Password))
                 return new AuthResult {Message = "Incorrect fields!"};
@@ -48,8 +47,6 @@ namespace WebApp.Controllers.Api
             var userId = userRepository.Insert(user);
             if (userId > 0)
             {
-                uow.Commit();
-
                 var token = BlFactory.AccessTokenGenerator.GenerateToken(userId, model.Nick);
 
                 var blogUser = uow.BlogUserRepository.GetById(userId);

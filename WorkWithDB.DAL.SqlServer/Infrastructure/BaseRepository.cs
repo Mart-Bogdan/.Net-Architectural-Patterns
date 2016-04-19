@@ -8,18 +8,18 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
     internal abstract class BaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
         private readonly SqlConnection _connection;
-        private readonly SqlTransaction _transaction;
+        private readonly SqlTransactionManager _transactionManager;
 
-        protected BaseRepository(SqlConnection connection, SqlTransaction transaction)
+        protected BaseRepository(SqlConnection connection, SqlTransactionManager transactionManager)
         {
             _connection = connection;
-            _transaction = transaction;
+            _transactionManager = transactionManager;
         }
 
 
         protected T ExecuteScalar<T>(string sql, IDictionary<string, object> parameters = null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
             {
                 FillParameters(parameters, command);
 
@@ -29,7 +29,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 
         protected int ExecuteNonQuery(string sql, IDictionary<string, object> parameters=null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
             {
                 FillParameters(parameters, command);
 
@@ -43,7 +43,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
             {
                 FillParameters(parameters, command);
 
@@ -68,7 +68,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
             {
                 FillParameters(parameters, command);
 

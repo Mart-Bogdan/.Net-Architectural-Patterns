@@ -80,7 +80,8 @@ namespace WebApp.Controllers.Api
             post.UserId = user.Id;
 
             int postId = uow.BlogPostRepository.Upsert(post);
-            uow.Commit();
+
+            
 
             return postId;
             

@@ -18,7 +18,7 @@ namespace WorkWithDB.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            UnitOfWorkFactory.__Initialize(()=>new RestUnitOfWork());
+            UnitOfWorkFactory.__Initialize(()=>new SqlServerAdoNetUnitOfWork());
         }
     }
 }
