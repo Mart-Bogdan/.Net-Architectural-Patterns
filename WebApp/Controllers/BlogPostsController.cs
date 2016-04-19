@@ -10,13 +10,19 @@ namespace WebApp.Controllers
 {
     public class BlogPostsController : Controller
     {
-        IUnitOfWork unitOfWork = UnitOfWorkFactory.CreateInstance();
+        private readonly IBlogPostRepository _blogPostRepository;
+
+        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        {
+            _blogPostRepository = blogPostRepository;
+        }
+
         //
         // GET: /BlogPosts/
 
         public ActionResult Index()
         {
-            IList<BlogPostWithAuthor> blogPostWithAuthors = unitOfWork.BlogPostRepository.GetAllWithUserNick();
+            IList<BlogPostWithAuthor> blogPostWithAuthors = _blogPostRepository.GetAllWithUserNick();
             return View(blogPostWithAuthors);
         }
 
@@ -25,16 +31,9 @@ namespace WebApp.Controllers
         // GET: /BlogPosts/{id}
         public string Get(int id)
         {
-            var blogPost = unitOfWork.BlogPostRepository.GetById(id);
+            var blogPost = _blogPostRepository.GetById(id);
             return blogPost.Title+blogPost.Content;
             //return View("BlogView");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if(disposing)
-                unitOfWork.Dispose();
         }
     }
 }

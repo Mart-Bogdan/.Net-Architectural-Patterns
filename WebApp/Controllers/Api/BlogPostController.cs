@@ -14,8 +14,14 @@ namespace WebApp.Controllers.Api
 {
     public class BlogPostController : ApiController
     {
-        private IAccessTokenValidator _tokenValidator = BlFactory.AccessTokenValidator;
-        private IUnitOfWork uow = UnitOfWorkFactory.CreateInstance();
+        private readonly IAccessTokenValidator _tokenValidator;
+        private readonly IBlogPostRepository _blogPostRepository;
+
+        public BlogPostController(IAccessTokenValidator tokenValidator, IBlogPostRepository blogPostRepository)
+        {
+            _tokenValidator = tokenValidator;
+            _blogPostRepository = blogPostRepository;
+        }
 
         [HttpGet]
         public Result<IList<BlogPost>> GetPostsOfCurrentUser(string token)
@@ -26,7 +32,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<IList<BlogPost>>.Unauthorized;
             
-            return new Result<IList<BlogPost>>(uow.BlogPostRepository.GetByUserId(user.Id));
+            return new Result<IList<BlogPost>>(_blogPostRepository.GetByUserId(user.Id));
         }
 
         [HttpGet]
@@ -38,7 +44,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<IList<BlogPostWithAuthor>>.Unauthorized;
 
-            return new Result<IList<BlogPostWithAuthor>>(uow.BlogPostRepository.GetAllWithUserNick());
+            return new Result<IList<BlogPostWithAuthor>>(_blogPostRepository.GetAllWithUserNick());
         }
 
         //TODO this should be disabled in production, to big overhead on DB and network
@@ -51,7 +57,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<IList<BlogPost>>.Unauthorized;
 
-            return new Result<IList<BlogPost>>(uow.BlogPostRepository.GetAll());
+            return new Result<IList<BlogPost>>(_blogPostRepository.GetAll());
         }
 
         [HttpPost]
@@ -65,7 +71,7 @@ namespace WebApp.Controllers.Api
 
             if (post.Id != 0)
             {
-                var existingPost = uow.BlogPostRepository.GetById(post.Id);
+                var existingPost = _blogPostRepository.GetById(post.Id);
                 if (existingPost == null)
                     return new Result<int> {ErrorMessage = "404 Incorrect ID", HasError = true};
 
@@ -79,7 +85,7 @@ namespace WebApp.Controllers.Api
 
             post.UserId = user.Id;
 
-            int postId = uow.BlogPostRepository.Upsert(post);
+            int postId = _blogPostRepository.Upsert(post);
 
             
 
@@ -97,7 +103,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<int>.Unauthorized;
 
-            return uow.BlogPostRepository.GetCount();
+            return _blogPostRepository.GetCount();
 
         }
 
@@ -111,7 +117,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<int>.Unauthorized;
 
-            return uow.BlogPostRepository.GetCountByUserId(userId);
+            return _blogPostRepository.GetCountByUserId(userId);
 
         }
         [HttpGet]
@@ -123,7 +129,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<BlogPost>.Unauthorized;
 
-            return uow.BlogPostRepository.GetById(id);
+            return _blogPostRepository.GetById(id);
         }
         [HttpGet]
         public Result<bool> Delete([FromUri] string token, [FromUri] int id)
@@ -134,15 +140,7 @@ namespace WebApp.Controllers.Api
             if (user == null)
                 return Result<bool>.Unauthorized;
 
-            return uow.BlogPostRepository.Delete(id);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                uow.Dispose();
-
-            base.Dispose(disposing);
+            return _blogPostRepository.Delete(id);
         }
     }
 }

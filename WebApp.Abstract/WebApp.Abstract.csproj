@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlFactory.cs" />
     <Compile Include="Security\IAccessTokenGenerator.cs" />
     <Compile Include="Security\IAccessTokenValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
