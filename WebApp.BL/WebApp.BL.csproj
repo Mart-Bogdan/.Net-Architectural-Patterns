@@ -36,6 +36,9 @@
     <Reference Include="Monads.NET">
       <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
