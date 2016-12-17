@@ -7,7 +7,7 @@ namespace WorkWithDB.DAL.Abstract
     {
         TKey Insert(TEntity entity);
         bool Update(TEntity entity);
-        int Upsert(TEntity entity);
+        TKey Upsert(TEntity entity);
 
         int GetCount();
 
