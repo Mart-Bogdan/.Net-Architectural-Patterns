@@ -40,7 +40,7 @@ namespace WorkWithDB.DAL.EF.Infrastructure
 
         public TEntity GetById(TKey id)
         {
-            return Items.First(e => e.Id.CompareTo(id) == 0);
+            return Items.Find(id);
         }
 
         public int GetCount()

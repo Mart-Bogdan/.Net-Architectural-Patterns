@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkWithDB.DAL.Abstract;
+using WorkWithDB.DAL.EF.Infrastructure;
 using WorkWithDB.DAL.EF.Repository;
 
 namespace WorkWithDB.DAL.EF
@@ -11,7 +12,7 @@ namespace WorkWithDB.DAL.EF
     class EFUnitOfWork : IUnitOfWork
     {
         private readonly BlogDbContext _context;
-
+        private ITransactionManager _transactionManager;
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
         private IAuthRepository _authRepository;
@@ -59,7 +60,9 @@ namespace WorkWithDB.DAL.EF
         {
             get
             {
-                throw new NotImplementedException();
+                if (_transactionManager == null)
+                    _transactionManager = new EFTransactionManager();
+                return _transactionManager;
             }
         }
     }
