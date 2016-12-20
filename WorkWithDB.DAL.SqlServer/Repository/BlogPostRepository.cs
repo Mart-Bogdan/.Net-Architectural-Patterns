@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.SqlServer.Infrastructure;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.SqlServer.Repository
@@ -15,7 +16,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             : base(connection, transactionManager)
         {}
 
-        public override int Insert(Entity.BlogPost entity)
+        public override int Insert(BlogPost entity)
         {
             return (int)
                 base.ExecuteScalar<decimal>(
@@ -31,7 +32,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
 
         }
 
-        public override bool Update(Entity.BlogPost entity)
+        public override bool Update(BlogPost entity)
         {
             var res = base.ExecuteNonQuery(
                     "update BlogPost set Content = @Content ,UserId = @UserId, Title =@Title  where Id = @Id ",
@@ -62,7 +63,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                 );
         }
 
-        public Entity.BlogPost GetById(int id)
+        public BlogPost GetById(int id)
         {
             return base.ExecuteSingleRowSelect(
                     "select bp.Id,bp.UserId,bp.Content,bp.Created, bp.Title from BlogPost bp where bp.Id = @Id",
@@ -109,7 +110,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             
         } 
         
-        public IList<Entity.BlogPost> GetByUserId(int userId)
+        public IList<BlogPost> GetByUserId(int userId)
         {
             return base.ExecuteSelect(
                 "Select bp.Id, bp.UserId, bp.Content, bp.Created,bp.Title from BlogPost bp where bp.UserId = @userId",

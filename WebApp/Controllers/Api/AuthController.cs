@@ -6,6 +6,7 @@ using WebApp.Api.Models.Requests;
 using WebApp.Api.Models.Responces;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 
 namespace WebApp.Controllers.Api
 {

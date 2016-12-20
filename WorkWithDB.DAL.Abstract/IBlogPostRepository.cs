@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.Abstract

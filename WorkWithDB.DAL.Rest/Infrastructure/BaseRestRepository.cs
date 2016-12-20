@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities.Abstract;
 
 namespace WorkWithDB.DAL.Rest.Infrastructure
 {
@@ -15,5 +17,10 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
         public abstract TEntity GetById(TKey id);
         public abstract bool Delete(TKey id);
         public abstract IList<TEntity> GetAll();
+
+        TKey IBaseRepository<TKey, TEntity>.Upsert(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

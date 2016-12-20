@@ -1,4 +1,6 @@
-﻿namespace WorkWithDB.Entity.Views
+﻿using WorkWithDB.Entity.Entities;
+
+namespace WorkWithDB.Entity.Views
 {
     /// <summary>
     /// This class represents posts and their author's nicks to siplay in list of posts

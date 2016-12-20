@@ -9,7 +9,7 @@ using WorkWithDB.DAL.EF.Repository;
 
 namespace WorkWithDB.DAL.EF
 {
-    class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
     {
         private readonly BlogDbContext _context;
         private ITransactionManager _transactionManager;

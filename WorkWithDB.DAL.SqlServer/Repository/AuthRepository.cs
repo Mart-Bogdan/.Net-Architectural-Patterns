@@ -1,5 +1,6 @@
 ﻿using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 
 namespace WorkWithDB.DAL.SqlServer.Repository
 {

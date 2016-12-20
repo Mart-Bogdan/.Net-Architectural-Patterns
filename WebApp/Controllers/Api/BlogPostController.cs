@@ -8,6 +8,7 @@ using WebApp.Api.Models.Requests;
 using WebApp.Api.Models.Responces;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 
 namespace WebApp.Controllers.Api

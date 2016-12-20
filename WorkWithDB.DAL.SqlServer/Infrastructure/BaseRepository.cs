@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities.Abstract;
 
 namespace WorkWithDB.DAL.SqlServer.Infrastructure
 {

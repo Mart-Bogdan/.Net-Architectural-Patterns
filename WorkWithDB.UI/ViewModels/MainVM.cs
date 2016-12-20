@@ -8,6 +8,7 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 using WorkWithDB.UI.Debug;
 using WorkWithDB.UI.MVVM;

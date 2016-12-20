@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.SqlServer.Infrastructure;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 
 namespace WorkWithDB.DAL.SqlServer.Repository
 {
@@ -11,7 +12,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
     {
         public BlogUserRepository(SqlConnection connection, SqlTransactionManager transactionManager) : base(connection, transactionManager) { }
 
-        public override int Insert(Entity.BlogUser entity)
+        public override int Insert(BlogUser entity)
         {
             return (int)
                 base.ExecuteScalar<decimal>(
@@ -25,7 +26,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                     );
         }
 
-        public override bool Update(Entity.BlogUser entity)
+        public override bool Update(BlogUser entity)
         {
             var res = base.ExecuteNonQuery(
                     "UPDATE BlogUser set UserPassword = @UserPassword,   Name = @Name,  Nick = @Nick where Id = @Id ",
@@ -48,7 +49,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
             return base.ExecuteScalar<int>("select count(*) from BlogUser");
         }
 
-        public Entity.BlogUser GetById(int id)
+        public BlogUser GetById(int id)
         {
             return base.ExecuteSingleRowSelect(
                     "select bu.Id,bu.Name,bu.Nick,bu.UserPassword from  BlogUser bu where bu.Id = @userId",

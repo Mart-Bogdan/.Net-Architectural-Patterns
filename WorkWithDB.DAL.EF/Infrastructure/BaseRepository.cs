@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities.Abstract;
 
 namespace WorkWithDB.DAL.EF.Infrastructure
 {
@@ -20,7 +21,10 @@ namespace WorkWithDB.DAL.EF.Infrastructure
             Items = _context.Set<TEntity>();
         }
 
-        protected BlogDbContext Context { get; }
+        protected BlogDbContext Context
+        {
+            get { return _context; }
+        }
         protected DbSet<TEntity> Items { get; set; }
 
         public bool Delete(TKey id)

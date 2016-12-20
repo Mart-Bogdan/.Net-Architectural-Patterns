@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Data.Entity.Infrastructure;
 
 namespace WorkWithDB.DAL.EF
 {
@@ -11,7 +12,7 @@ namespace WorkWithDB.DAL.EF
     {
         public static BlogDbContext CreateContext()
         {
-            string connectingString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            string connectingString = ConfigurationManager.ConnectionStrings["BlogDbContext"].ConnectionString;
             BlogDbContext context = new BlogDbContext(connectingString);
             return context;
         }

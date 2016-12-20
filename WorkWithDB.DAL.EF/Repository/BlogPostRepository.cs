@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.EF.Infrastructure;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.EF.Repository

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.UI.MVVM;
 using WorkWithDB.UI.Views;
 

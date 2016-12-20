@@ -8,6 +8,7 @@ using WebApp.Api.Models.Responces;
 using WorkWithDB.DAL.Abstract;
 using WorkWithDB.DAL.Rest.Infrastructure;
 using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.Rest.Repository

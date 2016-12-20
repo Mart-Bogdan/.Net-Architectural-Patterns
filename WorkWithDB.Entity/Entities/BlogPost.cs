@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WorkWithDB.Entity.Entities.Abstract;
 
-namespace WorkWithDB.Entity
+namespace WorkWithDB.Entity.Entities
 {
     public class BlogPost : BaseEntity<int>
     {

@@ -1,4 +1,5 @@
 ﻿using WorkWithDB.Entity;
+using WorkWithDB.Entity.Entities;
 
 namespace WorkWithDB.DAL.Abstract
 {

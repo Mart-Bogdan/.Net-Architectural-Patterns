@@ -15,6 +15,8 @@ using WorkWithDB.DAL.Rest;
 using WorkWithDB.DAL.Rest.Repository;
 using WorkWithDB.DAL.SqlServer;
 using WorkWithDB.Entity;
+using WorkWithDB.DAL.EF;
+using WorkWithDB.Entity.Entities;
 
 namespace WorkWithDB.Test
 {
@@ -35,11 +37,28 @@ namespace WorkWithDB.Test
             //var wc = HttpWebRequest.CreateHttp("http://localhost:17017/api/BlogPost/GetPostsOfCurrentUser?token=test");
 
             //wc.Method = "POST";
-            
+
             //var webResponse = wc.GetResponse();
 
-            
-            
+
+
+            using (IUnitOfWork scope = new EFUnitOfWork())
+            {
+                var pid =
+                    scope.BlogPostRepository.Insert(new BlogPost()
+                    {
+                        Content = "qwerty",
+                        Created = DateTimeOffset.Now,
+                        Id = 456,
+                        UserId = 1
+                    });
+                var id = scope.BlogUserRepository.Insert(new BlogUser() { Name = "Bogdan", Nick = "winnie2", UserPassword = "!QAZ2wsx#EDC4rfv" });
+                var allUsers = scope.BlogUserRepository.GetAll();
+                id = allUsers.Select(u => u.Id).FirstOrDefault();
+                var user = scope.BlogUserRepository.GetById(id);
+            }
+
+
             //using (RestUnitOfWork scope = new RestUnitOfWork())
             //{
             //    //scope.AuthRepository.Register(new RegisterModel()
