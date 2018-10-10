@@ -27,10 +27,6 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
             get { return _transaction; }
         }
 
-        ~SqlTransactionManager()
-        {
-        }
-
         public void Dispose()
         {
             if (_transaction != null)

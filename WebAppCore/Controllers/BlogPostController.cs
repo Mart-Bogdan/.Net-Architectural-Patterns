@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Core.Abstract.Security;
 using WebApp.Standard.Api.Models.Responces;
 using WorkWithDB.DAL.Standard.Abstract;
-using WorkWithDB.Entity;
-using WorkWithDB.Standard.Entity.Entities;
 using WorkWithDB.Standard.Entity.Views;
 using BlogPost = WorkWithDB.Standard.Entity.Entities.BlogPost;
 

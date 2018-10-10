@@ -41,6 +41,21 @@ namespace WebAppCore
 
             //services.Configure<RegistrationConfig>(Configuration.GetSection("RegistrationConfig"));
             //DependencyInstaller.RegisterDependencies(services);
+            
+            /*
+            var connStr = Configuration.GetSection("ConnectionStrings")["DefaultConnection"];
+            var sqlConnection = new SqlConnection(connStr);
+            
+            sqlConnection.Open();
+            var sqlCommand = sqlConnection.CreateCommand();
+            sqlCommand.CommandText = "SELECT * from BlogPost";
+            var sqlDataReader = sqlCommand.ExecuteReader();
+            sqlDataReader.Read();
+            object[] ooo = new object[100];
+            sqlDataReader.GetValues(ooo);
+            */
+            
+            
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             services.AddTransient<IBlogPostRepository, BlogPostRepository>();
             services.AddTransient<IBlogUserRepository, BlogUserRepository>();

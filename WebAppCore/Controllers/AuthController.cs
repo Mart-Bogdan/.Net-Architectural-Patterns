@@ -7,8 +7,6 @@ using WebApp.Core.Abstract.Security;
 using WebApp.Standard.Api.Models.Requests;
 using WebApp.Standard.Api.Models.Responces;
 using WorkWithDB.DAL.Standard.Abstract;
-using WorkWithDB.Entity;
-using WorkWithDB.Standard.Entity.Entities;
 using BlogUser = WorkWithDB.Standard.Entity.Entities.BlogUser;
 
 namespace WebAppCore.Controllers

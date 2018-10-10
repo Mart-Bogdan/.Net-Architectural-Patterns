@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApp.Core.Abstract\WebApp.Core.Abstract.csproj" />
-    <ProjectReference Include="..\WebApp.Core.Api.Models\WebApp.Core.Api.Models.csproj" />
     <ProjectReference Include="..\WebApp.Standard.Api.Models\WebApp.Standard.Api.Models.csproj" />
     <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj" />
     <ProjectReference Include="..\WorkWithDB.DAL.Standard.Abstract\WorkWithDB.DAL.Standard.Abstract.csproj" />
