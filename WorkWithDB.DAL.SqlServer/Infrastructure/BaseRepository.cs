@@ -27,7 +27,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             }
         }
 
-        protected int ExecuteNonQuery(string sql, IDictionary<string, object> parameters=null)
+        protected int ExecuteNonQuery(string sql, IDictionary<string, object> parameters = null)
         {
             using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
             {
@@ -39,7 +39,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 
         protected T ExecuteSingleRowSelect<T>(
             string sql,
-            Func<SqlDataReader,T> rowMapping, 
+            Func<SqlDataReader, T> rowMapping,
             IDictionary<string, object> parameters = null
             )
         {

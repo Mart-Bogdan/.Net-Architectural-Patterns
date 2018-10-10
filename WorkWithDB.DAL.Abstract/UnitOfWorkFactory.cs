@@ -13,9 +13,9 @@ namespace WorkWithDB.DAL.Abstract
 
         public static IUnitOfWork CreateInstance()
         {
-            if(_factory == null)
+            if (_factory == null)
                 throw new InvalidOperationException("Библиотека работы с данными не инициализирована");
-         
+
             return _factory.Invoke();
         }
 

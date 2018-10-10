@@ -21,7 +21,7 @@ namespace RestSharpJsonNet
             ContentType = "application/json";
             _serializer = serializer;
         }
-        
+
         /// <summary>
         /// Unused for JSON Serialization
         /// </summary>

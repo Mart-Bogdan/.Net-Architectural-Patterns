@@ -10,7 +10,7 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
 {
     public class BaseRestOperations
     {
-        static readonly string ApiUrl 
+        static readonly string ApiUrl
             = ConfigurationManager.AppSettings["api_endpopint"] ?? "http://localhost:17017/api/";
 
         protected RestClient Client;
@@ -28,14 +28,14 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
             };
 
             //if (TokenHolder.AuthToken != null)
-            request.AddParameter("token", TokenHolder.AuthToken??"", ParameterType.UrlSegment);
+            request.AddParameter("token", TokenHolder.AuthToken ?? "", ParameterType.UrlSegment);
 
-            if (body != null) 
+            if (body != null)
                 request.AddBody(body);
 
             if (arguments != null)
             {
-                Dictionary<string,object> dict = AnonObjectToDictionary(arguments);
+                Dictionary<string, object> dict = AnonObjectToDictionary(arguments);
 
                 foreach (var kv in dict)
                 {
@@ -67,7 +67,7 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
         /// <param name="body"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        protected T ExecuteRequest<T>(string resource, object body=null,object arguments=null)
+        protected T ExecuteRequest<T>(string resource, object body = null, object arguments = null)
         {
             var request = BuildRequest(resource, body, arguments);
 
@@ -84,7 +84,7 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
             ValidateResponceRaw(response);
 
             var result = response.Data;
-            if(result.HasError)
+            if (result.HasError)
                 throw new Exception(result.ErrorMessage);
         }
 

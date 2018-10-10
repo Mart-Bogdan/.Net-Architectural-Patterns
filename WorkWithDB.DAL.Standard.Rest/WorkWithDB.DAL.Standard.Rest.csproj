@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RestSharpJsonNet.Standard\RestSharpJsonNet.Standard.csproj" />
+    <ProjectReference Include="..\WebApp.Standard.Api.Models\WebApp.Standard.Api.Models.csproj" />
+    <ProjectReference Include="..\WorkWithDB.DAL.Standard.Abstract\WorkWithDB.DAL.Standard.Abstract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>C:\Users\vovch\.nuget\packages\restsharp\106.5.0\lib\netstandard2.0\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.ConfigurationManager">
+      <HintPath>..\..\..\.nuget\packages\system.configuration.configurationmanager\4.5.0\ref\netstandard2.0\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -7,8 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WebApp.BL;
-using WorkWithDB.DAL.Abstract;
-using WorkWithDB.DAL.SqlServer;
+
 
 namespace WebApp
 {

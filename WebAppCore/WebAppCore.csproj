@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Ninject" Version="3.3.4" />
+    <PackageReference Include="Ninject.Web.Common" Version="3.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApp.Core.Abstract\WebApp.Core.Abstract.csproj" />
+    <ProjectReference Include="..\WebApp.Core.Api.Models\WebApp.Core.Api.Models.csproj" />
+    <ProjectReference Include="..\WebApp.Standard.Api.Models\WebApp.Standard.Api.Models.csproj" />
+    <ProjectReference Include="..\WorkWithDB.DAL.Abstract\WorkWithDB.DAL.Abstract.csproj" />
+    <ProjectReference Include="..\WorkWithDB.DAL.Standard.Abstract\WorkWithDB.DAL.Standard.Abstract.csproj" />
+    <ProjectReference Include="..\WorkWithDB.Standard.Entity\WorkWithDB.Standard.Entity.csproj" />
+    <ProjectReference Include="..\WorkWithDB.Standartd.DAL.SqlServer\WorkWithDB.Standartd.DAL.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.2.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -12,7 +12,7 @@ using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.Rest.Repository
 {
-    public class BlogPostRepository : BaseRestRepository<int,BlogPost>, IBlogPostRepository
+    public class BlogPostRepository : BaseRestRepository<int, BlogPost>, IBlogPostRepository
     {
         public IList<BlogPostWithAuthor> GetAllWithUserNick()
         {
@@ -21,9 +21,9 @@ namespace WorkWithDB.DAL.Rest.Repository
             return result;
         }
 
-        private int SaveImpl( BlogPost post)
+        private int SaveImpl(BlogPost post)
         {
-            return ExecuteRequest<int>("BlogPost/Save",body:post);
+            return ExecuteRequest<int>("BlogPost/Save", body: post);
         }
 
         public override int Insert(BlogPost entity)
@@ -63,7 +63,7 @@ namespace WorkWithDB.DAL.Rest.Repository
 
         public override BlogPost GetById(int id)
         {
-            return ExecuteRequest<BlogPost>("BlogPost/Get", arguments:new{ id } );
+            return ExecuteRequest<BlogPost>("BlogPost/Get", arguments: new { id });
         }
 
         public override bool Delete(int id)

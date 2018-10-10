@@ -15,7 +15,7 @@ namespace WorkWithDB.DAL.Rest
         {
             get
             {
-                if(_blogPostRepository == null)
+                if (_blogPostRepository == null)
                     _blogPostRepository = new BlogPostRepository();
                 return _blogPostRepository;
             }
@@ -27,7 +27,7 @@ namespace WorkWithDB.DAL.Rest
         {
             get
             {
-                if(_authRepository == null)
+                if (_authRepository == null)
                     _authRepository = new AuthRepository();
                 return _authRepository;
             }

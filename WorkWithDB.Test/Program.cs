@@ -9,12 +9,8 @@ using Newtonsoft.Json;
 using RestSharp;
 using WebApp.Api.Models.Requests;
 using WebApp.Api.Models.Responces;
-using WorkWithDB.DAL.Abstract;
-
-using WorkWithDB.DAL.Rest;
-using WorkWithDB.DAL.Rest.Repository;
-using WorkWithDB.DAL.SqlServer;
 using WorkWithDB.Entity;
+
 
 namespace WorkWithDB.Test
 {
@@ -35,11 +31,11 @@ namespace WorkWithDB.Test
             //var wc = HttpWebRequest.CreateHttp("http://localhost:17017/api/BlogPost/GetPostsOfCurrentUser?token=test");
 
             //wc.Method = "POST";
-            
+
             //var webResponse = wc.GetResponse();
 
-            
-            
+
+
             //using (RestUnitOfWork scope = new RestUnitOfWork())
             //{
             //    //scope.AuthRepository.Register(new RegisterModel()
@@ -84,7 +80,7 @@ namespace WorkWithDB.Test
 
             var restRequest = new RestRequest("BlogPost/Save", Method.POST);
             restRequest.RequestFormat = DataFormat.Json;
-            restRequest.AddParameter("token", "test",ParameterType.QueryString);
+            restRequest.AddParameter("token", "test", ParameterType.QueryString);
 
             restRequest.AddBody(
                    //new {

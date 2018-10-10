@@ -5,8 +5,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using WorkWithDB.DAL.Abstract;
 using WorkWithDB.Entity;
+//using WorkWithDB.Standart.Entity.Entities;
 using WorkWithDB.UI.MVVM;
 
 namespace WorkWithDB.UI.ViewModels

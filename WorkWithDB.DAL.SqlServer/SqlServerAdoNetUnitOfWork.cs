@@ -15,13 +15,13 @@ namespace WorkWithDB.DAL.SqlServer
 
         private IBlogUserRepository _blogUserRepository;
         private IBlogPostRepository _blogPostRepository;
-        private IAuthRepository     _authRepository;
+        private IAuthRepository _authRepository;
         private SqlTransactionManager _transactionManager;
 
         /// <summary>
         /// 
         /// </summary>
-        public SqlServerAdoNetUnitOfWork ()
+        public SqlServerAdoNetUnitOfWork()
         {
             _connection = SqlConnectionFactory.CreateConnection();
             _connection.Open();
@@ -73,10 +73,10 @@ namespace WorkWithDB.DAL.SqlServer
 
         public void Dispose()
         {
-            if(_transactionManager!=null)
+            if (_transactionManager != null)
                 _transactionManager.Dispose();
 
-            _connection.Dispose();    
+            _connection.Dispose();
         }
     }
 }

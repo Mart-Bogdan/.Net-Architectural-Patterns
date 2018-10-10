@@ -4,7 +4,7 @@ using WorkWithDB.Entity;
 
 namespace WorkWithDB.DAL.Rest.Infrastructure
 {
-    public abstract class BaseRestRepository<TKey, TEntity> : BaseRestOperations, IBaseRepository<TKey, TEntity> 
+    public abstract class BaseRestRepository<TKey, TEntity> : BaseRestOperations, IBaseRepository<TKey, TEntity>
         where TEntity : BaseEntity<TKey>
     {
         //TODO эти методы могут быть реализованы в общем виде, но нам

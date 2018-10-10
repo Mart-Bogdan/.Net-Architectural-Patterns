@@ -8,15 +8,15 @@ namespace WorkWithDB.DAL.Rest.Infrastructure
     /// </summary>
     public class DummyTxManager : ITransactionManager
     {
-        public void Dispose(){}
+        public void Dispose() { }
 
         public IDisposable Begin()
         {
             return this;
         }
 
-        public void Commit(){}
+        public void Commit() { }
 
-        public void RollBack(){}
+        public void RollBack() { }
     }
 }

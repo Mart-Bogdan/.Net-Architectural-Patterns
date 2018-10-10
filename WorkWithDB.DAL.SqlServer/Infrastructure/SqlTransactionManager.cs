@@ -25,7 +25,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
 
         public void Dispose()
         {
-            if (_transaction != null) 
+            if (_transaction != null)
                 _transaction.Dispose();
             _transaction = null;
         }
@@ -40,7 +40,7 @@ namespace WorkWithDB.DAL.SqlServer.Infrastructure
             _transaction = _connection.BeginTransaction(/*IsolationLevel.ReadCommitted*/);
             return this;
         }
-        
+
         public void Commit()
         {
             if (_transaction != null) _transaction.Commit();

@@ -20,7 +20,7 @@ namespace WorkWithDB.DAL.Rest.Repository
         public BlogUser Login(string login, string password)
         {
             var result = ExecuteRequestRaw<AuthResult>(
-                "Auth/Login", 
+                "Auth/Login",
                 new
                 {
                     Nick = login,

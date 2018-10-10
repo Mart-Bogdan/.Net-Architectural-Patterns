@@ -8,12 +8,12 @@ using WorkWithDB.Entity.Views;
 
 namespace WorkWithDB.DAL.SqlServer.Repository
 {
-    internal class BlogPostRepository : BaseRepository<int,BlogPost>, IBlogPostRepository 
+    internal class BlogPostRepository : BaseRepository<int, BlogPost>, IBlogPostRepository
     {
 
         public BlogPostRepository(SqlConnection connection, SqlTransactionManager transactionManager)
             : base(connection, transactionManager)
-        {}
+        { }
 
         public override int Insert(Entity.BlogPost entity)
         {
@@ -77,10 +77,10 @@ namespace WorkWithDB.DAL.SqlServer.Repository
         public bool Delete(int id)
         {
             var res = base.ExecuteNonQuery(
-                "delete from BlogPost where Id = @id", 
-                new SqlParameters(){{"id",id}});
+                "delete from BlogPost where Id = @id",
+                new SqlParameters() { { "id", id } });
 
-            if(res>1)
+            if (res > 1)
                 throw new InvalidOperationException("Multiple rows deleted by single delete query");
 
             return res == 1;
@@ -98,17 +98,17 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                                       "     JOIN BlogUser u on bp.UserId = u.Id" +
                                       "     order by bp.Created desc",
                                       reader => new BlogPostWithAuthor
-                                        {
-                                            Id = (int)reader["Id"],
-                                            UserId = (int)reader["UserId"],
-                                            Title = (string)reader["Title"],
-                                            Created = (DateTimeOffset)reader["Created"],
-                                            AuthorNick = (string)reader["Nick"],
-                                        }
+                                      {
+                                          Id = (int)reader["Id"],
+                                          UserId = (int)reader["UserId"],
+                                          Title = (string)reader["Title"],
+                                          Created = (DateTimeOffset)reader["Created"],
+                                          AuthorNick = (string)reader["Nick"],
+                                      }
                                     );
-            
-        } 
-        
+
+        }
+
         public IList<Entity.BlogPost> GetByUserId(int userId)
         {
             return base.ExecuteSelect(
@@ -119,7 +119,7 @@ namespace WorkWithDB.DAL.SqlServer.Repository
                     }
                 );
         }
-        
+
 
         protected override BlogPost DefaultRowMapping(SqlDataReader reader)
         {

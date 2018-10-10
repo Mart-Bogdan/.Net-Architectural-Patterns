@@ -7,7 +7,7 @@ namespace WorkWithDB.DAL.Abstract
     {
         IBlogPostRepository BlogPostRepository { get; }
         IBlogUserRepository BlogUserRepository { get; }
-        IAuthRepository     AuthRepository     { get; }
+        IAuthRepository AuthRepository { get; }
         ITransactionManager TransactionManager { get; }
     }
 }
