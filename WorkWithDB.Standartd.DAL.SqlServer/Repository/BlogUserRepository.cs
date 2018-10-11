@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using Microsoft.Extensions.Options;
 using WorkWithDB.DAL.Standard.Abstract;
 using WorkWithDB.Standard.Entity.Entities;
 using WorkWithDB.Standartd.DAL.SqlServer.Infrastructure;
@@ -10,7 +11,8 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
 {
     public class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
-        public BlogUserRepository(SqlConnection connection, SqlTransactionManager transactionManager) : base(connection, transactionManager) { }
+        public BlogUserRepository(IOptions<ConnectionStrings> options, ITransactionManager transactionManager) :
+            base(options, transactionManager) { }
 
         public override int Insert(BlogUser entity)
         {

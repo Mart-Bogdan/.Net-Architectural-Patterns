@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using Microsoft.Extensions.Options;
 using WorkWithDB.DAL.Standard.Abstract;
 using WorkWithDB.Standard.Entity.Entities;
 using WorkWithDB.Standard.Entity.Views;
@@ -12,8 +13,8 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
     public class BlogPostRepository : BaseRepository<int, BlogPost>, IBlogPostRepository
     {
 
-        public BlogPostRepository(SqlConnection connection, SqlTransactionManager transactionManager)
-            : base(connection, transactionManager)
+        public BlogPostRepository(IOptions<ConnectionStrings> options,ITransactionManager transactionManager)
+            : base(options,transactionManager)
         { }
 
         public override int Insert(BlogPost entity)
@@ -127,7 +128,7 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
             return new BlogPost
             {
                 Id = (int)reader["Id"],
-                UserId = (int)reader["UserId"],
+                UserId = (int?)reader["UserId"],
                 Content = (string)reader["Content"],
                 Created = (DateTimeOffset)reader["Created"],
                 Title = (string)reader["Title"],

@@ -1,0 +1,12 @@
+﻿@using(Html.BeginForm("AddBlogPost", "BlogPosts", FormMethod.Post))
+{
+    
+    <table>
+        <tr><td><p>Введите тему </p></td>
+            <td><input type="text" name="Title" /> </td></tr>
+        <tr><td><p>Введите контент</p></td>
+            <td><input type="text" name="Content" /> </td></tr>
+        <tr><td><input type="submit" value="Отправить" /> </td>
+            <td></td></tr>
+    </table>
+}

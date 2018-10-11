@@ -10,6 +10,7 @@ namespace WorkWithDB.DAL.Standard.Abstract
         /// Returned disposable will auto close TX (rollback if not commited)
         /// </summary>
         /// <returns></returns>
+      
         IDisposable Begin();
         void Commit();
         void RollBack();

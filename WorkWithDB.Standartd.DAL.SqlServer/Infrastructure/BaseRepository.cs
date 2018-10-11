@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using Microsoft.Extensions.Options;
+using WorkWithDB.DAL.Standard.Abstract;
 using WorkWithDB.Standard.Entity.Entities.Abstract;
 
 
@@ -10,18 +12,19 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
     public abstract class BaseRepository<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
         private readonly SqlConnection _connection;
-        private readonly SqlTransactionManager _transactionManager;
+        private readonly ITransactionManager _transactionManager;
 
-        protected BaseRepository(SqlConnection connection, SqlTransactionManager transactionManager)
+        protected BaseRepository(IOptions<ConnectionStrings> options,
+            ITransactionManager transactionManager)
         {
-            _connection = connection;
+            _connection = SqlConnectionFactory.CreateConnection(options.Value.DefaultConnection); ;
             _transactionManager = transactionManager;
         }
 
 
-        protected T ExecuteScalar<T>(string sql, IDictionary<string, object> parameters = null)
+        public T ExecuteScalar<T>(string sql, IDictionary<string, object> parameters = null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection))
             {
                 FillParameters(parameters, command);
 
@@ -31,7 +34,7 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
 
         protected int ExecuteNonQuery(string sql, IDictionary<string, object> parameters = null)
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection))
             {
                 FillParameters(parameters, command);
 
@@ -45,7 +48,7 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection))
             {
                 FillParameters(parameters, command);
 
@@ -70,7 +73,7 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
             IDictionary<string, object> parameters = null
             )
         {
-            using (SqlCommand command = new SqlCommand(sql, _connection, _transactionManager.CurrentTransaction))
+            using (SqlCommand command = new SqlCommand(sql, _connection))
             {
                 FillParameters(parameters, command);
 

@@ -13,16 +13,16 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
         private SqlTransaction _transaction;
         private IOptions<ConnectionStrings> _options;
 
-        public SqlTransactionManager(SqlConnection connection,
+        public SqlTransactionManager(
             IOptions<ConnectionStrings> options)
         {
 
-            _connection = connection;
+           // _connection = connection;
 
             _connection = SqlConnectionFactory.CreateConnection(options.Value.DefaultConnection);
         }
 
-        internal SqlTransaction CurrentTransaction
+        public SqlTransaction CurrentTransaction
         {
             get { return _transaction; }
         }
