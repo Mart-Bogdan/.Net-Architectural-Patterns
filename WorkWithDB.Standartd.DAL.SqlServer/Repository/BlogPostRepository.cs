@@ -35,16 +35,21 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
 
         public override bool Update(BlogPost entity)
         {
-            var res = base.ExecuteNonQuery(
+            int res = 0;
+            try
+            {
+                res = base.ExecuteNonQuery(
                     "update BlogPost set Content = @Content ,UserId = @UserId, Title =@Title  where Id = @Id ",
                     new SqlParameters
                     {
                         {"Content", entity.Content},
                         {"Id", entity.Id},
-                        {"UserId", entity.UserId  },
-                        {"Title", entity.Title  },
+                        {"UserId", entity.UserId},
+                        {"Title", entity.Title},
                     }
                 );
+            }
+            catch { }
 
             return res > 0;
         }

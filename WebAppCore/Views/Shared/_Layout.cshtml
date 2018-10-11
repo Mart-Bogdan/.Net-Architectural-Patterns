@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     @*@Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")*@
 </head>
@@ -19,6 +20,7 @@
             <nav>
                 <ul id="menu">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("BlogPost", "GetAllBlogs", "BlogPosts", new { area = "" }, null)</li>
                     @*<li>@Html.ActionLink("Index", "Help", new { area = "" }, null)</li>*@
                 </ul>
             </nav>

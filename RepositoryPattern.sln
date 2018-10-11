@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkWithDB.Standard.Entity"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.BL.Core", "WebApp.BL.Core\WebApp.BL.Core.csproj", "{074D60CA-EDD0-47F5-A6A0-2052CD735824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkWithDB.Standartd.DAL.SqlServer", "WorkWithDB.Standartd.DAL.SqlServer\WorkWithDB.Standartd.DAL.SqlServer.csproj", "{9AB41BB5-2239-4355-B3DA-7EC75FF0934A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkWithDB.Standartd.DAL.SqlServer", "WorkWithDB.Standartd.DAL.SqlServer\WorkWithDB.Standartd.DAL.SqlServer.csproj", "{9AB41BB5-2239-4355-B3DA-7EC75FF0934A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

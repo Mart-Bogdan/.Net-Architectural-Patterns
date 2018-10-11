@@ -33,6 +33,7 @@ namespace WebAppCore.Controllers
         }
         //
         // GET: /BlogPosts/{id}
+
         public ActionResult GetblogPost(int id)
         {
             var blogPost = _blogPostRepository.GetById(id);
@@ -62,11 +63,29 @@ namespace WebAppCore.Controllers
             return View();
         }
 
-        public ActionResult DeleteblogPost(int id)
+        public IActionResult DeleteblogPost(int id)
         {
            bool result =  _blogPostRepository.Delete(id);
 
             return View(result);
         }
+
+        [HttpPost]
+        public IActionResult EditBlogPost(BlogPost mc)
+        {
+            if (ModelState.IsValid)
+            {
+                _blogPostRepository.Update(mc);
+            }
+
+            return View();
+        }
+
+        public ActionResult EditBlogPost(int id)
+        {
+            BlogPost blogPost =  _blogPostRepository.GetById(id);
+            return View(blogPost);
+        }
+
     }
 }

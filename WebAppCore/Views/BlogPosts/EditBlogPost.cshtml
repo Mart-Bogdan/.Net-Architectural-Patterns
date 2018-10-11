@@ -1,0 +1,12 @@
+﻿@model WorkWithDB.Standard.Entity.Entities.BlogPost
+
+@{
+}
+
+<h2>Редактирование поста «@Model?.Title»</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Сохранить" />
+}
