@@ -1,0 +1,16 @@
+﻿@model WorkWithDB.Standard.Entity.Entities.BlogPost
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+
+<h2>Редактирование поста «@Model?.Title»</h2>
+<div class="blog-post-editor-raw">
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model=>model.Id)
+        @Html.EditorForModel()
+        <input type="submit" value="Сохранить" />
+    }
+</div>

@@ -56,11 +56,22 @@ namespace WebAppCore
             */
             
             
+            var connStr = Configuration.GetSection("ConnectionStrings")["DefaultConnection"];
+            
+            
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            
+            services.AddScoped<SqlConnection>(provider =>
+            {
+                var connection = new SqlConnection(connStr);
+                connection.Open();
+                return connection;
+            });
+            
             services.AddTransient<IBlogPostRepository, BlogPostRepository>();
             services.AddTransient<IBlogUserRepository, BlogUserRepository>();
             services.AddTransient<IAuthRepository,AuthRepository>();
-            services.AddTransient<ITransactionManager, SqlTransactionManager>();
+            services.AddScoped<ITransactionManager, SqlTransactionManager>();
             //services.AddTransient<SqlConnection, SqlConnectionFactory.CreateConnection();
         }
 

@@ -1,28 +1,46 @@
 ﻿@using WorkWithDB.Standard.Entity.Views
 @model IList<WorkWithDB.Standard.Entity.Views.BlogPostWithAuthor>
 
-@{
+@{  
     ViewBag.Title = "Blog posts";
 }
 
-<h2>title</h2>
-<table>
+<h2>Список всех постов!</h2>
+<p>@Html.ActionLink("Новый пост", "AddBlogPost", new {},new {@class = "btn btn-success"})</p>
+<table style="width: 100%">
     <thead>
-    <td>Title</td>
-    <td>Author</td>
-   
+    <td width="auto">Title</td>
+    <td width="60">Author</td>
+    <td width="220">Actions</td>
+
     </thead>
     <tbody>
-    @foreach (var post in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(post.Title, "GetblogPost", new {id=post.Id})
-                   
-            </td>
-            <td>@post.AuthorNick</td>
-        </tr>
-    }
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(post.Title, "GetBlogPost", new { id = post.Id })
+                </td>
+                <td>@post.AuthorNick</td>
+                <td>
+                    @using (Html.BeginForm("DeleteBlogPost", "BlogPosts"))
+                    {
+                        <div class="pull-right">
+                            @Html.HiddenFor(x => post.Id)
+                            <input type="submit" class="btn btn-danger" value="Удалить"/>
+                        </div>
+                    }
+
+
+                    <div class="pull-right">
+
+
+                        @Html.ActionLink("Редактирование", "EditBlogPostRaw", "BlogPosts", new {post.Id}, new {@class = "btn btn-success"})
+
+                    </div>
+                </td>
+            </tr>
+        }
 
 
     </tbody>

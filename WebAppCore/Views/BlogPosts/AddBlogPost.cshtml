@@ -1,12 +1,20 @@
-﻿@using(Html.BeginForm("AddBlogPost", "BlogPosts", FormMethod.Post))
+﻿@model WorkWithDB.Standard.Entity.Entities.BlogPost
+@using(Html.BeginForm("AddBlogPost", "BlogPosts", FormMethod.Post))
 {
     
-    <table>
-        <tr><td><p>Введите тему </p></td>
-            <td><input type="text" name="Title" /> </td></tr>
-        <tr><td><p>Введите контент</p></td>
-            <td><input type="text" name="Content" /> </td></tr>
-        <tr><td><input type="submit" value="Отправить" /> </td>
-            <td></td></tr>
-    </table>
+    <div>
+        <p>Введите тему </p>
+        <p>
+            @Html.ValidationMessage("Title")
+        </p>
+        <p><input type="text" name="Title" /> </p>
+        <p>Введите контент</p>
+        <p>
+            @Html.ValidationMessage("Content")
+        </p>
+            <p><textarea name="Content" class="custom-content-input" >
+
+</textarea> </p>
+        <p><input type="submit" value="Отправить" /> </p>
+    </div>
 }

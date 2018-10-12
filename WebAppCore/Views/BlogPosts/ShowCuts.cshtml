@@ -1,0 +1,74 @@
+﻿@using Ninject.Activation
+@using WorkWithDB.Standard.Entity.Views
+@model IList<WorkWithDB.Standard.Entity.Entities.BlogPost>
+
+
+<!-- ... -->
+<style>
+    #cartTable td { vertical-align: middle; }
+</style>
+
+<!-- ... -->
+
+<tbody>
+@foreach (var line in Model)
+{
+    <div class="well">
+        <h3>
+            <strong>@Html.ActionLink(line.Title, "GetBlogPost", new {id = line.Id})</strong>
+        </h3>
+        @using (Html.BeginForm("DeleteBlogPost", "BlogPosts"))
+        {
+            <div class="pull-right">
+                @Html.Hidden("Id", line.Id)
+                @Html.HiddenFor(x => line.Id)
+                <input type="submit" class="btn btn-success" value="Удалить"/>
+            </div>
+        }
+
+
+        <div class="pull-right">
+
+
+            @Html.ActionLink("Редактирование", "EditBlogPostRaw", "BlogPosts", new {line.Id}, new {@class = "btn btn-success"})
+
+        </div>
+
+        <span class="lead" style="white-space: pre-line">@line.Content</span>
+    </div>
+}
+
+<div class="pull-right">
+    @Html.ActionLink("Додати пост", "AddBlogPost", "BlogPosts", null, new {@class = "btn btn-success"})
+</div>
+
+</tbody>
+<!-- ... -->
+
+@*@{  
+    ViewBag.Title = "Blog posts";
+}
+
+<h2>title</h2>
+<table>
+    <thead>
+    <td>Title</td>
+    <td>Author</td>
+
+    </thead>
+    <tbody>
+    @foreach (var post in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(post.Title, "GetblogPost", new { id = post.Id })
+
+            </td>
+            <td>@post.Content</td>
+        </tr>
+    }
+
+
+    </tbody>
+</table>@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@

@@ -14,10 +14,11 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Infrastructure
         private readonly SqlConnection _connection;
         private readonly ITransactionManager _transactionManager;
 
-        protected BaseRepository(IOptions<ConnectionStrings> options,
+        protected BaseRepository(
+            SqlConnection connection,
             ITransactionManager transactionManager)
         {
-            _connection = SqlConnectionFactory.CreateConnection(options.Value.DefaultConnection); ;
+            _connection = connection;
             _transactionManager = transactionManager;
         }
 

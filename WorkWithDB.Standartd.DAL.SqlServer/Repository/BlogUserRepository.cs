@@ -11,8 +11,8 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
 {
     public class BlogUserRepository : BaseRepository<int, BlogUser>, IBlogUserRepository
     {
-        public BlogUserRepository(IOptions<ConnectionStrings> options, ITransactionManager transactionManager) :
-            base(options, transactionManager) { }
+        public BlogUserRepository(SqlConnection connection, ITransactionManager transactionManager) :
+            base(connection, transactionManager) { }
 
         public override int Insert(BlogUser entity)
         {

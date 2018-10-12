@@ -33,3 +33,13 @@
         display: none;
     }
 }
+
+.blog-post-editor-raw #Content, .custom-content-input {
+    width: 100%;
+    height: 355px;
+}
+
+.field-validation-error {
+    color: darkred;
+    font-weight: 800;
+}

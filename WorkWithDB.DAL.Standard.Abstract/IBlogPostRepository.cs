@@ -9,6 +9,7 @@ namespace WorkWithDB.DAL.Standard.Abstract
 {
     public interface IBlogPostRepository : IBaseRepository<int, BlogPost>
     {
+        BlogPostWithAuthor GetByIdWithAuthor(int id);
         IList<BlogPost> GetByUserId(int userId);
         int GetCountByUserId(int userId);
         IList<BlogPostWithAuthor> GetAllWithUserNick();

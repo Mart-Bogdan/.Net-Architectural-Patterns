@@ -6,30 +6,44 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    @*@Styles.Render("~/Content/Site.css")
-    @Scripts.Render("~/bundles/modernizr")*@
+    <link rel="stylesheet" href="~/css/site.css" />
+    @* @Scripts.Render("~/bundles/modernizr") *@
 </head>
 <body>
-<header>
-    <div class="content-wrapper">
-        <div class="float-left">
-            <p class="site-title">
-                <a href="~/">ASP.NET Web API</a></p>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ACTS Web Example</a>
         </div>
-        <div class="float-right">
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("BlogPost", "GetAllBlogs", "BlogPosts", new { area = "" }, null)</li>
-                    @*<li>@Html.ActionLink("Index", "Help", new { area = "" }, null)</li>*@
-                </ul>
-            </nav>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home", new {area = ""}, null)</li>
+                <li>@Html.ActionLink("All Blog Posts", "Index", "BlogPosts", new {area = ""}, null)</li>
+                <li>@Html.ActionLink("Preview posts", "ShowCuts", "BlogPosts", new {area = ""}, null)</li>
+            </ul>
         </div>
     </div>
-</header>
-@RenderBody()
+</nav>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; 2018 - ACTS Web, 4th term</p>
+    </footer>
+</div>
 
-@*@Scripts.Render("~/bundles/jquery")*@
+
+@* @Scripts.Render("~/bundles/jquery") *@
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 @RenderSection("scripts", required: false)
 </body>
 </html>

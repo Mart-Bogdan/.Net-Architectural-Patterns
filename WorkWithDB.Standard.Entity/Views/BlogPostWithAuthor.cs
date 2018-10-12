@@ -3,7 +3,7 @@
 namespace WorkWithDB.Standard.Entity.Views
 {
     /// <summary>
-    /// This class represents posts and their author's nicks to siplay in list of posts
+    /// This class represents posts and their author's nicks to display in list of posts
     /// </summary>
     public class BlogPostWithAuthor : BlogPost
     {

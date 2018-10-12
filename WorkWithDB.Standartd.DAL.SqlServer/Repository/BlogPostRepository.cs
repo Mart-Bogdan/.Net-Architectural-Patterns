@@ -13,8 +13,8 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
     public class BlogPostRepository : BaseRepository<int, BlogPost>, IBlogPostRepository
     {
 
-        public BlogPostRepository(IOptions<ConnectionStrings> options,ITransactionManager transactionManager)
-            : base(options,transactionManager)
+        public BlogPostRepository(SqlConnection connection ,ITransactionManager transactionManager)
+            : base(connection, transactionManager)
         { }
 
         public override int Insert(BlogPost entity)
@@ -35,21 +35,16 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
 
         public override bool Update(BlogPost entity)
         {
-            int res = 0;
-            try
-            {
-                res = base.ExecuteNonQuery(
-                    "update BlogPost set Content = @Content ,UserId = @UserId, Title =@Title  where Id = @Id ",
-                    new SqlParameters
-                    {
-                        {"Content", entity.Content},
-                        {"Id", entity.Id},
-                        {"UserId", entity.UserId},
-                        {"Title", entity.Title},
-                    }
-                );
-            }
-            catch { }
+            var res = base.ExecuteNonQuery(
+                "update BlogPost set Content = @Content ,UserId = @UserId, Title =@Title  where Id = @Id ",
+                new SqlParameters
+                {
+                    {"Content", entity.Content},
+                    {"Id", entity.Id},
+                    {"UserId", entity.UserId  },
+                    {"Title", entity.Title  },
+                }
+            );
 
             return res > 0;
         }
@@ -114,6 +109,29 @@ namespace WorkWithDB.Standartd.DAL.SqlServer.Repository
                                       }
                                     );
 
+        }
+
+        public BlogPostWithAuthor GetByIdWithAuthor(int id)
+        {
+            return base.ExecuteSingleRowSelect("Select bp.Id, bp.UserId, bp.Title, bp.Created, u.Nick, bp.Content " +
+                                      "     from BlogPost bp " +
+                                      "     JOIN BlogUser u on bp.UserId = u.Id" +
+                                      "     WHERE bp.id=@Id",
+                reader => new BlogPostWithAuthor
+                {
+                    Id = (int)reader["Id"],
+                    UserId = (int)reader["UserId"],
+                    Title = (string)reader["Title"],
+                    Created = (DateTimeOffset)reader["Created"],
+                    AuthorNick = (string)reader["Nick"],
+                    Content = (string)reader["Content"],
+                },
+                
+                new SqlParameters()
+                {
+                    {"Id", id}
+                }
+            );
         }
 
         public IList<BlogPost> GetByUserId(int userId)
