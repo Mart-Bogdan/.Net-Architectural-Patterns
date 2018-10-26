@@ -1,5 +1,5 @@
-﻿@using WorkWithDB.Standard.Entity.Views
-@model IList<WorkWithDB.Standard.Entity.Views.BlogPostWithAuthor>
+﻿@using WebApp.Core.Entity.Views
+@model IList<WebApp.Core.Entity.Views.BlogPostWithAuthor>
 
 @{  
     ViewBag.Title = "Blog posts";
@@ -35,7 +35,7 @@
                     <div class="pull-right">
 
 
-                        @Html.ActionLink("Редактирование", "EditBlogPostRaw", "BlogPosts", new {post.Id}, new {@class = "btn btn-success"})
+                        @Html.ActionLink("Редактирование", "EditBlogPost", "BlogPosts", new {post.Id}, new {@class = "btn btn-success"})
 
                     </div>
                 </td>

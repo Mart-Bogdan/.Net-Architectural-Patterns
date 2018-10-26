@@ -1,6 +1,6 @@
 ﻿@using Ninject.Activation
-@using WorkWithDB.Standard.Entity.Views
-@model IList<WorkWithDB.Standard.Entity.Entities.BlogPost>
+@using WebApp.Core.Entity.Views
+@model IList<WebApp.Core.Entity.Entities.BlogPost>
 
 
 <!-- ... -->
@@ -30,7 +30,7 @@
         <div class="pull-right">
 
 
-            @Html.ActionLink("Редактирование", "EditBlogPostRaw", "BlogPosts", new {line.Id}, new {@class = "btn btn-success"})
+            @Html.ActionLink("Редактирование", "EditBlogPost", "BlogPosts", new {line.Id}, new {@class = "btn btn-success"})
 
         </div>
 

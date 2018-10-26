@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebAppCore.Models;
-using WorkWithDB.DAL.Standard.Abstract;
-using WorkWithDB.Standard.Entity.Entities;
-using WorkWithDB.Standard.Entity.Views;
+using WebApp.Core.DAL.Abstract;
+using WebApp.Core.Entity.Entities;
+using WebApp.Core.Entity.Views;
+using WebAppCore.Models.BlogPostModels;
 
 namespace WebAppCore.Controllers
 {
@@ -12,11 +16,13 @@ namespace WebAppCore.Controllers
     {
         private readonly IBlogPostRepository _blogPostRepository;
         private readonly IBlogUserRepository _userRepository;
+        private readonly UserManager<BlogUser> _userManager;
 
-        public BlogPostsController(IBlogPostRepository blogPostRepository, IBlogUserRepository userRepository)
+        public BlogPostsController(IBlogPostRepository blogPostRepository, IBlogUserRepository userRepository, UserManager<BlogUser> userManager)
         {
             _blogPostRepository = blogPostRepository;
             _userRepository = userRepository;
+            _userManager = userManager;
         }
 
         //
@@ -44,23 +50,37 @@ namespace WebAppCore.Controllers
             return View(blogPost);
         }
 
+        [Authorize(Roles = "Administrator,Blogger")]
         public IActionResult AddBlogPost()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddBlogPost(BlogPost mc)
+        [Authorize(Roles = "Administrator,Blogger")]
+        public IActionResult AddBlogPost(BlogPostCreateModel mc)
         {
             if (ModelState.IsValid)
             {
-                var blogUsers = _userRepository.GetAll();
+    
+                //This method should not fail with null reference, as we are authorized here!
+                // ReSharper disable once RedundantAssignment
+                var userId = ((ClaimsIdentity) User.Identity)
+                    .FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
 
-                var randomUser = blogUsers[new Random().Next(blogUsers.Count - 1)];
+                userId = _userManager.GetUserId(User);
+                
+                var post = new BlogPost
+                {
+                    Created = DateTimeOffset.Now, 
+                    UserId = userId,
+                    Content = mc.Content,
+                    Title = mc.Title,
+                };
 
-                mc.Created = DateTimeOffset.Now;
-                mc.UserId = randomUser.Id;
-                _blogPostRepository.Insert(mc);
+
+
+                _blogPostRepository.Insert(post);
                 
                 return RedirectToAction("Index");
             }
@@ -69,23 +89,57 @@ namespace WebAppCore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator,Blogger")]
         public IActionResult DeleteBlogPost(int id)
         {
-           bool result =  _blogPostRepository.Delete(id);
+            var isAdmin = User.Claims
+                .Where(c=>c.Type==_userManager.Options.ClaimsIdentity.RoleClaimType).Any(c=>c.Value=="Administrator");
+            if (isAdmin)
+            {
+                bool result = _blogPostRepository.Delete(id);
+                return View(result);
+            }
+            else
+            {
+                var post = _blogPostRepository.GetById(id);
+                if (post == null)
+                {
+                    return NotFound();
+                }
 
-            return View(result);
+                if (post.UserId != _userManager.GetUserId(User))
+                {
+                    return Forbid();
+                }
+                
+                bool result = _blogPostRepository.Delete(id);
+                return View(result);
+            }
+
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator,Blogger")]
         public IActionResult EditBlogPost(BlogPost mc)
         {
             if (ModelState.IsValid)
             {
                 var oldPost = _blogPostRepository.GetById(mc.Id);
 
+                        
+                var isAdmin = User.Claims
+                    .Where(c=>c.Type==_userManager.Options.ClaimsIdentity.RoleClaimType).Any(c=>c.Value=="Administrator");
+                if (isAdmin)
+                {
+                    oldPost.UserId = mc.UserId;
+                }
+                else if (oldPost.UserId != _userManager.GetUserId(User))
+                {
+                    return Forbid();
+                }
+                
                 oldPost.Title = mc.Title;
                 oldPost.Content = mc.Content;
-                oldPost.UserId = mc.UserId;
                 
                 _blogPostRepository.Update(oldPost );
             }
@@ -95,15 +149,29 @@ namespace WebAppCore.Controllers
             return View(mc);
         }
 
+        [Authorize(Roles = "Administrator,Blogger")]
         public ActionResult EditBlogPost(int id)
         {
+            
             BlogPost blogPost =  _blogPostRepository.GetById(id);
-            var users = _userRepository.GetAll();
-            ViewBag.Users = users;
-            return View(blogPost);
+            
+            var isAdmin = User.Claims
+                .Where(c=>c.Type==_userManager.Options.ClaimsIdentity.RoleClaimType).Any(c=>c.Value=="Administrator");
+            if (isAdmin || blogPost.UserId == _userManager.GetUserId(User))
+            {
+                var users = _userRepository.GetAll();
+                ViewBag.Users = users;
+                return View(blogPost);
+            }
+            else
+            {
+                return Forbid();
+            }
+
         }
         
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult EditBlogPostRaw(BlogPost mc)
         {
             if (ModelState.IsValid)
@@ -114,6 +182,7 @@ namespace WebAppCore.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult EditBlogPostRaw(int id)
         {
             BlogPost blogPost =  _blogPostRepository.GetById(id);

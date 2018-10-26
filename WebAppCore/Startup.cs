@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WorkWithDB.DAL.Standard.Abstract;
-using WorkWithDB.Standartd.DAL.SqlServer;
-using WorkWithDB.Standartd.DAL.SqlServer.Infrastructure;
-using WorkWithDB.Standartd.DAL.SqlServer.Repository;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Dependency;
+using WebApp.Core.DAL.Abstract;
+using WebApp.Core.DAL.EfMsSql;
+using WebApp.Core.Entity.Entities;
+using WebAppCore.Services;
 
 namespace WebAppCore
 {
@@ -41,37 +42,39 @@ namespace WebAppCore
 
             //services.Configure<RegistrationConfig>(Configuration.GetSection("RegistrationConfig"));
             //DependencyInstaller.RegisterDependencies(services);
-            
-            /*
-            var connStr = Configuration.GetSection("ConnectionStrings")["DefaultConnection"];
-            var sqlConnection = new SqlConnection(connStr);
-            
-            sqlConnection.Open();
-            var sqlCommand = sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "SELECT * from BlogPost";
-            var sqlDataReader = sqlCommand.ExecuteReader();
-            sqlDataReader.Read();
-            object[] ooo = new object[100];
-            sqlDataReader.GetValues(ooo);
-            */
+           
             
             
             var connStr = Configuration.GetSection("ConnectionStrings")["DefaultConnection"];
+         
+            services.AddDbContext<BlogDbContext>(options =>
+                //options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(connStr)//, b=> b.MigrationsAssembly(typeof(DbContext).Assembly.FullName))
+            );
+
+            services.AddBlogRepositories();
             
+            services.AddTransient<IEmailSender, EmailSender>();
             
-            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
-            
-            services.AddScoped<SqlConnection>(provider =>
-            {
-                var connection = new SqlConnection(connStr);
-                connection.Open();
-                return connection;
-            });
-            
-            services.AddTransient<IBlogPostRepository, BlogPostRepository>();
-            services.AddTransient<IBlogUserRepository, BlogUserRepository>();
-            services.AddTransient<IAuthRepository,AuthRepository>();
-            services.AddScoped<ITransactionManager, SqlTransactionManager>();
+            services.AddIdentity<BlogUser, IdentityRole>(config =>
+                   {
+                //        config.SignIn.RequireConfirmedEmail = true;
+                       config.ClaimsIdentity.UserIdClaimType =
+                           "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+
+                   }
+                )
+                .AddEntityFrameworkStores<BlogDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(c=>
+                {
+                    c.Cookie.Name = "ActsMvcBlog";
+                    
+                });
+
+//            services.AddScoped<ITransactionManager, SqlTransactionManager>();
             //services.AddTransient<SqlConnection, SqlConnectionFactory.CreateConnection();
         }
 
@@ -90,6 +93,7 @@ namespace WebAppCore
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
 
 
             app.UseMvc(routes =>
@@ -98,6 +102,8 @@ namespace WebAppCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            UsersInitializer.Initialize(app.ApplicationServices);
         }
     }
 }

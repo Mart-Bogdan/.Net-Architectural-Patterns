@@ -1,5 +1,5 @@
-﻿@using WorkWithDB.Standard.Entity.Entities
-@model WorkWithDB.Standard.Entity.Entities.BlogPost
+﻿@using WebApp.Core.Entity.Entities
+@model WebApp.Core.Entity.Entities.BlogPost
 
 @{
     ViewBag.Title = Model?.Title;
@@ -20,7 +20,7 @@
         <p>
             <label for="UserId">Author</label>
             <select asp-for="UserId" 
-                    asp-items="@(new SelectList(ViewBag.Users,"Id","Nick"))">
+                    asp-items="@(new SelectList(ViewBag.Users,"Id","FullName"))">
                 <option>Please select one</option>
             </select>
             

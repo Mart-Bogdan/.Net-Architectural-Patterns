@@ -27,6 +27,7 @@
                 <li>@Html.ActionLink("All Blog Posts", "Index", "BlogPosts", new {area = ""}, null)</li>
                 <li>@Html.ActionLink("Preview posts", "ShowCuts", "BlogPosts", new {area = ""}, null)</li>
             </ul>
+            @await Html.PartialAsync("_LoginPartial")
         </div>
     </div>
 </nav>
